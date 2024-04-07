@@ -23,43 +23,58 @@ export default function TransitionProvider({
       : path;
   const windowWidth = useWindowWidth();
   return (
-    <AnimatePresence key={`${pathname} - ${title}`} mode="wait">
-      <div key={`${pathname}`} className="w-full overflow-hidden">
+    <AnimatePresence key={`${pathname} - ${path}`} mode="wait">
+      <div key={`${pathname} - ${title}`} className="w-full overflow-hidden">
         {!disableNavbar.includes(pathname.split("/")[1]) && <Header />}
-        <motion.div
+        {/* <motion.div
           className={`w-[100dvw] h-[100dvh] fixed bg-secondary ${
             windowWidth < 640 ? "rounded-b-[50px]" : "rounded-b-[100px]"
           } z-40`}
           initial={{ height: "0dvh" }}
           animate={{ height: "0dvh" }}
           exit={{ height: "140dvh" }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut", delay: 2 }}
+        /> */}
+        <motion.div
+          className={`w-[100dvw] h-[100dvh] fixed hidden bg-secondary ${
+            windowWidth < 640 ? "rounded-t-[50px]" : "rounded-t-[100px]"
+          } bottom-0 z-40`}
+          initial={{ height: "140dvh" }}
+          animate={{
+            display: "block",
+            height: "0dvh",
+            transition: { delay: 0.8, duration: 0.5, display: { delay: 0.8 } },
+          }}
+          exit={{ height: "0dvh" }}
         />
         <motion.div
           className="fixed m-auto left-0 top-0 bottom-0 right-0 text-white text-8xl z-50 cursor-default w-fit h-fit capitalize sm1:text-5xl sm0:text-5xl"
-          initial={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
           animate={{
-            opacity: 0,
+            opacity: 1,
             display: "none",
           }}
           exit={{ opacity: 0 }}
           transition={{
-            duration: 0.8,
+            delay: 0.2,
+            duration: 0.3,
             ease: "easeInOut",
-            display: { delay: 0.8 },
+            display: { delay: 0.9 },
           }}
         >
           {title}
         </motion.div>
         <motion.div
           className={`w-[100dvw] h-[100dvh] fixed bg-secondary ${
-            windowWidth < 640 ? "rounded-t-[50px]" : "rounded-t-[100px]"
-          } bottom-0 z-40`}
-          initial={{ height: "140dvh" }}
+            windowWidth < 640 ? "rounded-b-[50px]" : "rounded-b-[100px]"
+          } top-0 z-40`}
+          initial={{ height: "0dvh" }}
           animate={{
-            height: "0dvh",
-            transition: { delay: 0.5, duration: 0.5 },
+            height: "140dvh",
+            display: "none",
+            transition: { duration: 0.8, display: { delay: 0.8 } },
           }}
+          exit={{ height: "140dvh" }}
         />
         <main className="max-w-4xl px-4 mx-auto">
           {children}

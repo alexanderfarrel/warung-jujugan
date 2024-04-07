@@ -9,7 +9,7 @@ body,
 }
 
 .darkModeAnimation {
-  @apply transition-colors duration-1000 ease-in-out;
+  @apply transition-colors duration-[800ms] ease-in-out;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

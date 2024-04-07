@@ -49,7 +49,7 @@ export default function AdminPage() {
       <motion.div
         initial={{ y: -1000 }}
         animate={{ y: 0 }}
-        transition={{ duration: 1, delay: 0.2 }}
+        transition={{ duration: 1, delay: 0.4 }}
       >
         <div className="mt-20 flex flex-col gap-3">
           <h1 className="text-3xl sm1:text-xl sm0:text-xl dark:text-bright">

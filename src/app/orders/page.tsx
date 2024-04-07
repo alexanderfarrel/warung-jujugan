@@ -12,7 +12,7 @@ export default function Orders() {
     <motion.div
       initial={{ y: -1000 }}
       animate={{ y: 0 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1, delay: 0.4 }}
     >
       <OrdersView
         session={session}

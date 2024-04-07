@@ -12,7 +12,7 @@ function Hero() {
         className="h-100dvh"
         initial={{ y: "-200dvh" }}
         animate={{ y: "0dvh" }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1, delay: 0.4 }}
       >
         <section className=" grid grid-cols-2 mt-12 place-items-center">
           {typeof window != "undefined" && (

@@ -56,7 +56,7 @@ export default function HomeMenu() {
     <motion.div
       initial={{ y: -1000 }}
       animate={{ y: 0 }}
-      transition={{ duration: 1, delay: 0.2 }}
+      transition={{ duration: 1, delay: 0.4 }}
     >
       <section className="relative" id="menu">
         <motion.div

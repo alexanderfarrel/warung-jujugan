@@ -19,7 +19,7 @@ export default function DarkModeButton() {
       document.querySelectorAll("*").forEach((item: any) => {
         item.classList.remove("darkModeAnimation");
       });
-    }, 1000);
+    }, 800);
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
 

@@ -58,7 +58,7 @@ export default function RegisterPage() {
   };
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 py-3 px-4 shadow-custom flex justify-between">
+      <header className="fixed top-0 left-0 right-0 py-3 px-4 shadow-custom flex justify-between dark:bg-dark bg-white z-20">
         <Link
           className="text-primary font-semibold text-2xl sm1:text-lg sm0:text-lg"
           href="/"
@@ -70,7 +70,7 @@ export default function RegisterPage() {
       <motion.div
         initial={{ y: -1000 }}
         animate={{ y: 0 }}
-        transition={{ duration: 1, delay: 0.2 }}
+        transition={{ duration: 1, delay: 0.4 }}
       >
         <AuthLayout
           title="Register"
