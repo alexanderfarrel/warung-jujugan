@@ -83,7 +83,6 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }: any) {
-      session.user = session.user || {}; // Menjamin bahwa session.user telah didefinisikan
       session.user.image =
         (await checkImage(token.email)) || token.picture || ""; // Menggunakan token.picture sebagai cadangan jika tidak ada gambar yang ditemukan
       session.user.imageName = (await checkImageName(token.email)) || "";
