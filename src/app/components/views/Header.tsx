@@ -44,8 +44,8 @@ function Header() {
     open: {
       clipPath:
         windowWidth < 800
-          ? `circle(${window.innerHeight + 150}px at 368px 27px)`
-          : `circle(${window.innerHeight + 150}px at 348px 27px)`,
+          ? `circle(${window.innerHeight + 200}px at 368px 27px)`
+          : `circle(${window.innerHeight + 200}px at 348px 27px)`,
       transition: {
         type: "spring",
         stiffness: 25,
@@ -136,6 +136,12 @@ function Header() {
               className="flex flex-col justify-center items-center"
               animate={openMotion ? "open" : "closed"}
             >
+              <div
+                className={`fixed top-0 left-0 right-0 bottom-0 ${
+                  openMotion ? "" : "hidden"
+                }`}
+                onClick={() => setOpenMotion(false)}
+              ></div>
               <motion.div
                 className={`fixed top-0 right-0 bottom-0 ${
                   windowWidth < 400 ? `w-full` : "w-[400px]"
