@@ -17,6 +17,7 @@ import ModalReasonDeleteOrder from "../../layouts/modalLayouts/modalReasonDelete
 import { notifStatus } from "@/app/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function StatusView({ session }: any) {
   const windowWidth = useWindowWidth();
@@ -240,6 +241,11 @@ export default function StatusView({ session }: any) {
                                 )}
                               <button
                                 className="px-2 border-2 border-green-300 bg-green-300 rounded-md text-green-700 text-[13px] font-medium"
+                                onClick={() =>
+                                  toast.error("Fitur belum Tersedia", {
+                                    icon: "😭",
+                                  })
+                                }
                                 data-notAllowed="true"
                               >
                                 Hubungi Penjual
@@ -364,6 +370,11 @@ export default function StatusView({ session }: any) {
                             <button
                               className="px-2 py-1 bg-green-200 rounded-lg text-green-600 text-sm flex-shrink-0 self-end font-medium"
                               data-notAllowed="true"
+                              onClick={() =>
+                                toast.error("Fitur belum Tersedia", {
+                                  icon: "😭",
+                                })
+                              }
                             >
                               Hubungi Penjual
                             </button>

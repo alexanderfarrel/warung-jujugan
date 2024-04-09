@@ -12,6 +12,7 @@ import FormatToIDR from "@/services/formatter/formatToIDR";
 import Link from "next/link";
 import ModalOrderStatus from "../../layouts/modalLayouts/modalOrderStatus";
 import StatusOrderIcon from "../../icons/order";
+import toast from "react-hot-toast";
 
 export default function HistoryView(props: any) {
   const { session } = props;
@@ -255,6 +256,11 @@ export default function HistoryView(props: any) {
                             <button
                               className="px-2 text-green-500 font-bold text-[12px] self-end"
                               data-notAllowed="true"
+                              onClick={() =>
+                                toast.error("Fitur belum Tersedia", {
+                                  icon: "😭",
+                                })
+                              }
                             >
                               Hubungi Penjual
                             </button>
@@ -388,6 +394,11 @@ export default function HistoryView(props: any) {
                             <button
                               className="px-2 py-1 bg-green-300 rounded-lg text-green-700 text-sm flex-shrink-0 self-end"
                               data-notAllowed="true"
+                              onClick={() =>
+                                toast.error("Fitur belum Tersedia", {
+                                  icon: "😭",
+                                })
+                              }
                             >
                               Hubungi Penjual
                             </button>

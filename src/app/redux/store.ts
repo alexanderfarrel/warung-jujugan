@@ -4,6 +4,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const notificationSlice = createSlice({
   name: "notifications",
   initialState: {
+    announcement: true,
     notificationOrder: false,
     notificationStatus: false,
     orderCount: 0,
@@ -11,6 +12,9 @@ const notificationSlice = createSlice({
     historyCount: 0,
   },
   reducers: {
+    notifAnnouncement(state) {
+      state.announcement = false;
+    },
     notifOrder(state) {
       state.notificationOrder = true;
     },
@@ -41,6 +45,7 @@ export const {
   statusCount,
   clearNotification,
   historyCount,
+  notifAnnouncement,
 } = notificationSlice.actions;
 
 // Combine reducers using configureStore
