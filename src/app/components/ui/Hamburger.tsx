@@ -4,9 +4,24 @@ export default function HamburgerButton({ setOpenMotion, openMotion }: any) {
   return (
     <button
       onClick={() => setOpenMotion(!openMotion)}
-      className="z-50 text-white cursor-pointer"
+      className="z-50 text-white cursor-pointer relative w-5 h-4 flex flex-col rotate-180 justify-between"
     >
-      <svg width={23} height={23} viewBox="0 0 23 23">
+      <span
+        className={`h-[2px] w-full bg-white origin-left ${
+          openMotion ? "rotate-45" : ""
+        } transition-all duration-300`}
+      ></span>
+      <span
+        className={`h-[2px] w-[80%] bg-white ${
+          openMotion ? "opacity-0" : "opacity-100"
+        } transition-all duration-300`}
+      ></span>
+      <span
+        className={`h-[2px] w-full bg-white origin-left ${
+          openMotion ? "-rotate-45" : ""
+        } transition-all duration-300`}
+      ></span>
+      {/* <svg width={23} height={23} viewBox="0 0 23 23">
         <motion.path
           strokeWidth={2}
           stroke={"white"}
@@ -35,7 +50,7 @@ export default function HamburgerButton({ setOpenMotion, openMotion }: any) {
             open: { d: "M 3 2.5 L 17 16.346" },
           }}
         ></motion.path>
-      </svg>
+      </svg> */}
     </button>
   );
 }

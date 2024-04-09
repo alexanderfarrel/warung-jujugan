@@ -50,8 +50,8 @@ function Header() {
     open: {
       clipPath:
         windowWidth < 800
-          ? `circle(${window.innerHeight + 200}px at 368px 27px)`
-          : `circle(${window.innerHeight + 200}px at 348px 27px)`,
+          ? `circle(${window.innerHeight + 200}px at 350px 28px)`
+          : `circle(${window.innerHeight + 200}px at 370px 28px)`,
       transition: {
         type: "spring",
         stiffness: 25,
@@ -61,9 +61,9 @@ function Header() {
       clipPath:
         windowWidth < 800
           ? windowWidth < 400
-            ? `circle(18px at ${windowWidth - 32}px 27px)`
-            : "circle(18px at 368px 27px)"
-          : "circle(18px at 348px 27px)",
+            ? `circle(18px at ${windowWidth - 30}px 28px)`
+            : "circle(18px at 370px 28px)"
+          : "circle(18px at 350px 28px)",
       transition: {
         delay: 0.8,
         type: "spring",
@@ -138,10 +138,7 @@ function Header() {
                 </div>
               </Link>
             )}
-            <motion.div
-              className="flex flex-col justify-center items-center"
-              animate={openMotion ? "open" : "closed"}
-            >
+            <motion.div className="" animate={openMotion ? "open" : "closed"}>
               <div
                 className={`fixed top-0 left-0 right-0 bottom-0 ${
                   openMotion ? "" : "hidden"
