@@ -32,7 +32,7 @@ const Notification: React.FC<NotificationProps> = ({ className, session }) => {
     const data = await res.json();
     setDisplayNotif(data?.count?.status || 0);
     dispatch(statusCount(data?.count?.status || 0));
-    dispatch(historyCount(data?.count.history || 0));
+    dispatch(historyCount(data?.count?.history || 0));
   }, [dispatch, session?.accessToken, session?.user?.email]);
 
   useEffect(() => {

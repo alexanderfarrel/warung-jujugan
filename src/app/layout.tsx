@@ -9,7 +9,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { useEffect, useState } from "react";
 import TransitionProvider from "./components/views/TransitionProvider/TransitionProvider";
-import Header from "./components/views/Header";
+import Head from "next/head";
+import HeadLayout from "./components/layouts/HeadLayout/HeadLayout";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 const disableNavbar = ["auth"];
@@ -31,6 +32,9 @@ export default function RootLayout({
   let windowWidth = useWindowWidth();
   return (
     <html lang="en" className={isDarkMode ? "dark" : ""}>
+      <Head>
+        <HeadLayout />
+      </Head>
       <body className={`${roboto.className} dark:bg-dark`}>
         <SessionProvider>
           <Provider store={store}>
@@ -57,15 +61,6 @@ export default function RootLayout({
               }}
               reverseOrder={false}
             />
-            {/* <div key={pathname} className="w-full overflow-hidden">
-              {!disableNavbar.includes(pathname.split("/")[1]) && <Header />}
-              <main className="max-w-4xl px-4 mx-auto">
-                {children}
-                <footer className="p-8 text-center text-gray mt-16 dark:text-neutral-400">
-                  &copy; 2023 All rights reserved
-                </footer>
-              </main>
-            </div> */}
             <TransitionProvider
               disableNavbar={disableNavbar}
               pathname={pathname}

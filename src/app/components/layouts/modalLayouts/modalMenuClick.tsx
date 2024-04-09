@@ -185,7 +185,7 @@ export default function ModalMenuClick(props: any) {
             ></Image>
           )}
         </div>
-        <div className="flex mb-5 h-12 overflow-y-scroll mini-scrollbar">
+        <div className="flex mb-5 h-12 overflow-y-scroll mini-scrollbar dark:bg-dark2 px-1 rounded-lg">
           <h4 className="dark:text-neutral-300">{menuClick.subtitle}</h4>
         </div>
         {menuClick?.choice?.map((choice: any) => (

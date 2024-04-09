@@ -26,15 +26,6 @@ export default function TransitionProvider({
     <AnimatePresence key={`${pathname} - ${path}`} mode="wait">
       <div key={`${pathname} - ${title}`} className="w-full overflow-hidden">
         {!disableNavbar.includes(pathname.split("/")[1]) && <Header />}
-        {/* <motion.div
-          className={`w-[100dvw] h-[100dvh] fixed bg-secondary ${
-            windowWidth < 640 ? "rounded-b-[50px]" : "rounded-b-[100px]"
-          } z-40`}
-          initial={{ height: "0dvh" }}
-          animate={{ height: "0dvh" }}
-          exit={{ height: "140dvh" }}
-          transition={{ duration: 0.5, ease: "easeInOut", delay: 2 }}
-        /> */}
         <motion.div
           className={`w-[100dvw] h-[100dvh] fixed hidden bg-secondary ${
             windowWidth < 640 ? "rounded-t-[35px]" : "rounded-t-[80px]"

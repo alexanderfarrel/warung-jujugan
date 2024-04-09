@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Warung Jujugan",
   description: "Warung Jujugan ",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logo/jujugan2.ico",
   },
 };
 

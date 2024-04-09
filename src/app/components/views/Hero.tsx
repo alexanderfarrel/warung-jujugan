@@ -22,7 +22,7 @@ function Hero() {
                 transition={{ ease: "easeInOut", duration: 0.5 }}
                 className="py-8 opacity-0 -ml-5"
               >
-                <h1 className="text-4xl font-semibold sm0:text-3xl dark:text-[#eeeeee]">
+                <h1 className="text-4xl font-semibold sm1:text-3xl sm0:text-3xl dark:text-[#eeeeee]">
                   {"Everything Feels Better After You're Full"}
                 </h1>
                 {windowWidth > 640 && (
@@ -43,8 +43,8 @@ function Hero() {
                   className=""
                   src={"/logo/jujugan2.png"}
                   alt="Warung Jujugan Logo"
-                  width={250}
-                  height={250}
+                  width={200}
+                  height={200}
                 ></Image>
               </motion.div>
             </>

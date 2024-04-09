@@ -17,7 +17,6 @@ export default function MenuItem(props: any) {
     const div: HTMLElement | null = document.querySelector("[data-skeleton]");
     setWidth(Number(div?.offsetWidth));
   }, []);
-  console.log(width);
   return (
     <>
       <motion.div
@@ -60,8 +59,9 @@ export default function MenuItem(props: any) {
                   width={200}
                   height={200}
                   src={menu?.thumbnail}
-                  alt="soto"
+                  alt={menu.name}
                   className="object-cover object-center"
+                  loading="lazy"
                 />
               ) : (
                 <motion.img
@@ -74,7 +74,7 @@ export default function MenuItem(props: any) {
                     },
                   }}
                   src="/images/sawi.png"
-                  alt="soto"
+                  alt="sawi"
                 />
               )}
             </div>

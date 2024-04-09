@@ -28,17 +28,22 @@ export default function ModalDeleteStatusOrder({
                 {order.note != "nothing" ? (
                   <Image
                     src={order.topingChecked[0].display}
-                    alt="sawi"
+                    alt={order.name}
                     width={80}
                     height={80}
+                    loading="lazy"
                     className="object-center object-cover"
                   />
                 ) : (
                   <Image
-                    src={order.topingChecked[0].thumbnail}
-                    alt="sawi"
+                    src={
+                      order.topingChecked[0].thumbnail ||
+                      order.topingChecked[0].display
+                    }
+                    alt={order.name}
                     width={80}
                     height={80}
+                    loading="lazy"
                     className="object-center object-cover"
                   />
                 )}
@@ -70,15 +75,18 @@ export default function ModalDeleteStatusOrder({
               {order.note != "nothing" ? (
                 <Image
                   src={order.topingChecked[0].display}
-                  alt="sawi"
+                  alt={order.name}
                   width={80}
                   height={80}
                   className="object-center object-cover"
                 />
               ) : (
                 <Image
-                  src={order.topingChecked[0].thumbnail}
-                  alt="sawi"
+                  src={
+                    order.topingChecked[0].thumbnail ||
+                    order.topingChecked[0].display
+                  }
+                  alt={order.name}
                   width={80}
                   height={80}
                   className="object-center object-cover"

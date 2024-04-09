@@ -37,14 +37,17 @@ export default function FilterOrder({
           {order.note != "nothing" ? (
             <Image
               src={order.topingChecked[0].display}
-              alt="empty"
+              alt={order.name}
               width={100}
               height={100}
             ></Image>
           ) : (
             <Image
-              src={order.topingChecked[0].thumbnail}
-              alt="empty"
+              src={
+                order.topingChecked[0].thumbnail ||
+                order.topingChecked[0].display
+              }
+              alt={order.name}
               width={100}
               height={100}
             ></Image>
