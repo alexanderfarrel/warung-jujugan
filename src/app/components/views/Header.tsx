@@ -44,8 +44,8 @@ function Header() {
     open: {
       clipPath:
         windowWidth < 800
-          ? `circle(${window.innerHeight + 100}px at 368px 28px)`
-          : `circle(${window.innerHeight + 100}px at 348px 28px)`,
+          ? `circle(${window.innerHeight + 150}px at 368px 28px)`
+          : `circle(${window.innerHeight + 150}px at 348px 28px)`,
       transition: {
         type: "spring",
         stiffness: 25,
@@ -105,10 +105,10 @@ function Header() {
                 className="relative flex flex-col items-center group"
               >
                 <div className="max-w-36 whitespace-nowrap flex gap-2 items-center p-1 rounded-lg hover:dark:bg-dark2 sm1:hidden sm0:hidden">
-                  {session.user.image ? (
+                  {session?.user?.image ? (
                     <>
                       <Image
-                        src={session.user.image}
+                        src={session?.user?.image}
                         alt="profile"
                         className="w-8 h-8 min-w-8 rounded-full object-cover"
                         width={100}

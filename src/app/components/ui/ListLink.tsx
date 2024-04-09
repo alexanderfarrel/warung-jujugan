@@ -86,7 +86,7 @@ export default function ListLink({ session }: any) {
                 {session?.user?.image ? (
                   <>
                     <Image
-                      src={session.user.image}
+                      src={session?.user?.image}
                       alt="profile"
                       className="w-8 h-8 min-w-8 rounded-full object-cover"
                       width={100}
@@ -98,7 +98,7 @@ export default function ListLink({ session }: any) {
                 )}
                 <p className="text-xl text-ellipsis overflow-hidden mr-1">
                   <span className="text-neutral-500 dark:text-bright">
-                    {session.user.name}
+                    {session?.user?.username}
                   </span>
                 </p>
               </div>
