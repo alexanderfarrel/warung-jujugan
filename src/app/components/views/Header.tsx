@@ -46,7 +46,7 @@ function Header() {
       </motion.div>
     );
   }
-  const nama = session?.user?.username.split(" ")[0];
+  const nick = session?.user?.username.split(" ")[0];
 
   return (
     <motion.div
@@ -82,7 +82,7 @@ function Header() {
           )}
         </nav>
         <nav className="flex items-center justify-center gap-3 font-semibold text-gray">
-          {nama ? (
+          {nick ? (
             <>
               <DarkModeButton />
               <Link href="/status">
@@ -91,7 +91,7 @@ function Header() {
                   session={session}
                 />
               </Link>
-              <Link href="/orders" onClick={() => console.log("cart di klik")}>
+              <Link href="/orders">
                 <CartIcon
                   className={`cursor-pointer border-r-2 border-neutral-300 pr-3 relative text-neutral-700 dark:text-bright`}
                   session={session}
@@ -124,7 +124,7 @@ function Header() {
                 )}
                 <p className="text-xl text-ellipsis overflow-hidden sm1:hidden sm0:hidden">
                   <span className="text-neutral-500 dark:text-bright">
-                    {nama}
+                    {nick}
                   </span>
                 </p>
               </div>

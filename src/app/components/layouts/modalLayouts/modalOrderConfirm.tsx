@@ -74,51 +74,66 @@ export default function ModalOrderConfirm(props: any) {
   return (
     <Modal onClose={() => setMenuConfirm("")} closed={closed}>
       <h1 className="font-semibold text-xl mb-2 dark:text-bright">Pesanan</h1>
-      <div className="max-h-72 overflow-y-auto pr-4 khusus">
+      <div className="max-h-72 overflow-y-auto pr-4 mini-scrollbar">
         {menuConfirm.map((order: any, index: any) => (
-          <div key={index} className="flex">
-            <Image
-              src="/images/sawi2.png"
-              alt="sawi"
-              width={100}
-              height={100}
-            />
-            <div>
-              <h3 className="font-medium dark:text-neutral-200">
-                {order.name}
-              </h3>
-              <p className="text-white">
-                {order.note == "nothing" &&
-                order.topingChecked[0].disabled !== true
-                  ? "(" +
-                    order.topingChecked
-                      .map((toping: any) => {
-                        return toping.checked !== true ? toping.name : "";
-                      })
-                      .join(", ") +
-                    ")"
-                  : ""}
-              </p>
-              <p className="font-semibold dark:text-neutral-300">
-                {order.note == "nothing" ? (
-                  <>
-                    {FormatToIDR(order.totalPrice / order.count)}{" "}
-                    <span className="font-normal">x {order.count}</span>
-                  </>
+          <>
+            <div key={index} className="flex gap-3 mb-1">
+              <div className="w-20 h-20 flex justify-center items-center overflow-hidden">
+                {order.note != "nothing" ? (
+                  <Image
+                    src={order.topingChecked[0].display}
+                    alt="sawi"
+                    width={80}
+                    height={80}
+                    className="object-center object-cover"
+                  />
                 ) : (
-                  <>
-                    {FormatToIDR(order.topingChecked[0].price)}{" "}
-                    <span className="font-normal">x {order.count}</span>
-                  </>
+                  <Image
+                    src={order.topingChecked[0].thumbnail}
+                    alt="sawi"
+                    width={80}
+                    height={80}
+                    className="object-center object-cover"
+                  />
                 )}
-              </p>
+              </div>
+              <div>
+                <h3 className="font-medium dark:text-neutral-200">
+                  {order.name}
+                </h3>
+                <p className="text-white">
+                  {order.note == "nothing" &&
+                  order.topingChecked[0].disabled !== true
+                    ? "(" +
+                      order.topingChecked
+                        .map((toping: any) => {
+                          return toping.checked !== true ? toping.name : "";
+                        })
+                        .join(", ") +
+                      ")"
+                    : ""}
+                </p>
+                <p className="font-semibold dark:text-neutral-300">
+                  {order.note == "nothing" ? (
+                    <>
+                      {FormatToIDR(order.totalPrice / order.count)}{" "}
+                      <span className="font-normal">x {order.count}</span>
+                    </>
+                  ) : (
+                    <>
+                      {FormatToIDR(order.topingChecked[0].price)}{" "}
+                      <span className="font-normal">x {order.count}</span>
+                    </>
+                  )}
+                </p>
+              </div>
             </div>
-          </div>
+          </>
         ))}
       </div>
       <textarea
         ref={textAreaRef}
-        className=" w-full mt-2 py-1 px-2 rounded-xl focus:shadow-thin outline-none text-slate-600 khusus transition-shadow duration-200 dark:bg-dark2 dark:placeholder:text-neutral-400 dark:text-neutral-300"
+        className=" w-full mt-2 py-1 px-2 rounded-xl focus:shadow-thin outline-none text-slate-600 mini-scrollbar transition-shadow duration-200 dark:bg-dark2 dark:placeholder:text-neutral-400 dark:text-neutral-300"
         placeholder="Catatan Untuk Penjual"
         name="note"
         id="note"

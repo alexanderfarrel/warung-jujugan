@@ -22,7 +22,7 @@ function OrdersView(props: any) {
   }, [orders, setStatisOrder]);
   const [loading, setLoading] = useState<any>([
     { isLoading: false },
-    { loadingInfo: {} },
+    { loadingInfo: [] },
     { allLoading: false },
   ]);
   const isLoading = loading.find((loading: any) =>
@@ -74,7 +74,6 @@ function OrdersView(props: any) {
     }, 0);
     setSum(hargaNothing + hargaChoiceOne);
   }, [statisOrder, updateProduct]);
-
   useEffect(() => {
     getData();
   }, [getData]);
@@ -90,7 +89,7 @@ function OrdersView(props: any) {
         setLoading(() => {
           return [
             { isLoading: true },
-            { loadingInfo: {} },
+            { loadingInfo: [...loadingInfo.loadingInfo, product.id] },
             { allLoading: false },
           ];
         });
@@ -109,12 +108,30 @@ function OrdersView(props: any) {
           });
           const res = await result.json();
           if (res.status) {
-            setLoading(() => {
-              return [
-                { isLoading: false },
-                { loadingInfo: {} },
-                { allLoading: false },
-              ];
+            setLoading((prev: any) => {
+              const newState = [...prev];
+              if (
+                newState.some(
+                  (item: any) =>
+                    item.loadingInfo && Array.isArray(item.loadingInfo)
+                )
+              ) {
+                newState.forEach((item: any) => {
+                  if (
+                    item.loadingInfo &&
+                    Array.isArray(item.loadingInfo) &&
+                    item.loadingInfo.includes(product.id)
+                  ) {
+                    item.loadingInfo = item.loadingInfo.filter(
+                      (id: any) => id !== product.id
+                    );
+                  }
+                  if (item.isLoading) {
+                    item.isLoading = false;
+                  }
+                });
+              }
+              return newState;
             });
             dispatch(notifOrder());
             setUpdateProduct({});
@@ -255,7 +272,7 @@ function OrdersView(props: any) {
           setLoading(() => {
             return [
               { isLoading: false },
-              { loadingInfo: {} },
+              { loadingInfo: [] },
               { allLoading: false },
             ];
           });

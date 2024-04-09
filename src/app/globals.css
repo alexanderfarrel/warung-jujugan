@@ -15,7 +15,7 @@ body,
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
-.khusus::-webkit-scrollbar {
+.mini-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
 ::-webkit-scrollbar {
@@ -30,6 +30,14 @@ body,
 
 .coba {
   background-color: #9ea1a7;
+}
+
+.cutoff-text {
+  --max-lines: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: var(--max-lines);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* input:-webkit-autofill,

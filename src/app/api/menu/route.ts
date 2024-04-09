@@ -7,6 +7,7 @@ const data = [
     price: 20000,
     subtitle: "Dibuat dengan bawang putih dan perpaduan dengan bumbu lainnya",
     note: "nothing",
+    thumbnail: "/images/menu/Mie Ayam.png",
     choice: [
       {
         name: "Mie Ayam Original",
@@ -15,21 +16,25 @@ const data = [
         disabled: true,
         type: "checkbox",
         checked: true,
+        display: "/images/menu/Mie Ayam.png",
       },
       {
         name: "ceker",
         price: 2000,
         type: "checkbox",
+        thumbnail: "/images/menu/Mie Ayam Ceker.jpeg",
       },
       {
         name: "telur",
         price: 3000,
         type: "checkbox",
+        thumbnail: "/images/menu/Mie Ayam Telur.jpeg",
       },
       {
         name: "bakso",
         price: 4000,
         type: "checkbox",
+        thumbnail: "/images/menu/Mie Ayam Bakso.jpeg",
       },
     ],
   },
@@ -38,6 +43,7 @@ const data = [
     name: "Soto",
     price: 10000,
     subtitle: "Dibuat dengan bawang putih dan perpaduan dengan bumbu lainnya",
+    thumbnail: "/images/menu/Soto.png",
     note: "choiceOne",
     choice: [
       {
@@ -46,6 +52,7 @@ const data = [
         disabled: true,
         checked: true,
         type: "radio",
+        display: "/images/menu/Soto.png",
       },
     ],
   },
@@ -53,19 +60,23 @@ const data = [
     type: "makanan",
     name: "Ayam Bakar",
     price: 8000,
-    subtitle: "Dibuat dengan ayam dan dengan sepenuh hati",
+    subtitle:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa amet exercitationem, repellendus placeat ad similique laboriosam? Aspernatur voluptatem",
     note: "choiceOne",
+    thumbnail: "/images/menu/Ayam Bakar.jpg",
     choice: [
       {
         name: "Ayam Bakar Standart",
         price: 8000,
         type: "radio",
         checked: true,
+        display: "/images/menu/Ayam Bakar.jpg",
       },
       {
         name: "Ayam Bakar Besar",
         price: 13000,
         type: "radio",
+        display: "/images/menu/Ayam Bakar Jumbo.png",
       },
     ],
   },
@@ -76,6 +87,7 @@ const data = [
     subtitle:
       "Dibuat dengan diblender lalu ditambah gula, terbuat dari buah fresh",
     note: "choiceOne",
+    thumbnail: "/images/menu/Juice Alpukat.png",
     choice: [
       {
         id: 1,
@@ -83,24 +95,28 @@ const data = [
         price: 5000,
         type: "radio",
         checked: true,
+        display: "/images/menu/Juice Alpukat.png",
       },
       {
         id: 2,
         name: "Juice Jambu",
         price: 3000,
         type: "radio",
+        display: "/images/menu/Juice Jambu.png",
       },
       {
         id: 3,
         name: "Juice Nanas",
         price: 3000,
         type: "radio",
+        display: "/images/menu/Juice Nanas.jpeg",
       },
       {
         id: 4,
         name: "Juice Buah Naga",
         price: 4000,
         type: "radio",
+        display: "/images/menu/Juice Buah Naga.jpeg",
       },
     ],
   },

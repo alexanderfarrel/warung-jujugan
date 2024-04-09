@@ -21,7 +21,13 @@ export default function ModalMenuClick(props: any) {
   const [hargaUtama, setHargaUtama] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [closed, setClosed] = useState<boolean>(false);
+  const [urlDisplay, setUrlDisplay] = useState<string>("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    findUrl(menuClick.choice[0].name);
+  }, []);
+
   useEffect(() => {
     const jalanin = () => {
       if (menuClick.choice[0].type === "checkbox") {
@@ -52,6 +58,7 @@ export default function ModalMenuClick(props: any) {
   ]);
 
   const handleAddTopingRadio = (choice: any) => {
+    findUrl(choice.name);
     const input = document.getElementById(choice.name) as HTMLInputElement;
     if (input.checked) {
       setTopingChecked([choice]);
@@ -142,105 +149,133 @@ export default function ModalMenuClick(props: any) {
       error: "Pesanan Gagal Ditambahkan",
     });
   };
+  const findUrl = (name: string) => {
+    const url = menuClick?.choice?.find(
+      (item: any) => item.name === name
+    )?.display;
+    if (url) {
+      setUrlDisplay(url);
+    } else {
+      return;
+    }
+  };
+
   return (
     <Modal onClose={() => setMenuClick("")} closed={closed}>
-      <h1 className="font-bold text-3xl dark:text-bright">{menuClick.name}</h1>
-      <div className="px-10 overflow-hidden mb-2">
-        <Image
-          src="/images/sawi.png"
-          alt="sawi"
-          width={200}
-          height={200}
-          className="object-cover object-center"
-        ></Image>
-      </div>
-      {menuClick?.choice?.map((choice: any) => (
-        <div key={choice.name}>
-          <label
-            htmlFor={choice.name}
-            className={`border-2 border-primary ${
-              (document.getElementById(choice.name) as HTMLInputElement)
-                ?.checked
-                ? "bg-primary text-bright"
-                : "text-neutral-700"
-            } w-full flex items-center mb-2 rounded-xl px-2 py-1 relative cursor-pointer font-medium dark:text-bright capitalize transition-all duration-300`}
-          >
-            {choice.name}{" "}
-            <span
-              className={`ml-3 dark:text-neutral-200 ${
-                (document.getElementById(choice.name) as HTMLInputElement)
-                  ?.checked
-                  ? "text-neutral-100"
-                  : "text-neutral-500"
-              } text-[14px]`}
-            >
-              {choice.price == 0
-                ? choice.priceDisplay
-                  ? `${FormatToIDR(choice.priceDisplay)}`
-                  : ""
-                : choice.type === "radio"
-                ? `${FormatToIDR(choice.price)}`
-                : `+ ${FormatToIDR(choice.price)}`}
-            </span>
-            {(document.getElementById(choice.name) as HTMLInputElement)
-              ?.checked && (
-              <span className="absolute right-4">
-                <Tick />
-              </span>
-            )}
-          </label>
-          {choice.type === "radio" ? (
-            <input
-              type="radio"
-              id={choice.name}
-              name="options"
-              className="hidden"
-              defaultChecked={choice.checked}
-              onClick={() => handleAddTopingRadio(choice)}
-            />
+      <div className="max-w-[18rem]">
+        <h1 className="font-bold text-3xl dark:text-bright sm0:text-2xl mb-3">
+          {menuClick.name}
+        </h1>
+        <div className="flex justify-center items-center w-full h-36 overflow-hidden mb-2">
+          {menuClick.thumbnail ? (
+            <Image
+              src={urlDisplay}
+              alt={menuClick.name}
+              width={150}
+              height={150}
+              className="object-cover object-center"
+            ></Image>
           ) : (
-            <input
-              type="checkbox"
-              id={choice.name}
-              disabled={choice.disabled}
-              defaultChecked={choice.disabled}
-              name="options"
-              className="hidden"
-              onClick={() => handleAddTopingCheckbox(choice)}
-            />
+            <Image
+              src="/images/sawi.png"
+              alt="sawi"
+              width={200}
+              height={200}
+              className="object-cover object-center"
+            ></Image>
           )}
         </div>
-      ))}
-      <div className="flex mt-3 items-center justify-between">
-        <Counting count={count} setCount={setCount} className="self-start" />
-        <div className="">
-          <h2 className="dark:text-bright">Total Price :</h2>
-          {menuClick?.choice?.map((choice: any) => (
-            <div key={choice.name}>
+        <div className="flex mb-5 h-12 overflow-y-scroll mini-scrollbar">
+          <h4 className="dark:text-neutral-300">{menuClick.subtitle}</h4>
+        </div>
+        {menuClick?.choice?.map((choice: any) => (
+          <div key={choice.name}>
+            <label
+              htmlFor={choice.name}
+              className={`border-2 border-primary ${
+                (document.getElementById(choice.name) as HTMLInputElement)
+                  ?.checked
+                  ? "bg-primary text-bright"
+                  : "text-neutral-700"
+              } w-full flex items-center mb-2 rounded-xl px-2 py-1 relative cursor-pointer font-medium dark:text-bright capitalize transition-all duration-300`}
+            >
+              {choice.name}{" "}
+              <span
+                className={`ml-3 dark:text-neutral-200 ${
+                  (document.getElementById(choice.name) as HTMLInputElement)
+                    ?.checked
+                    ? "text-neutral-100"
+                    : "text-neutral-500"
+                } text-[14px]`}
+              >
+                {choice.price == 0
+                  ? choice.priceDisplay
+                    ? `${FormatToIDR(choice.priceDisplay)}`
+                    : ""
+                  : choice.type === "radio"
+                  ? `${FormatToIDR(choice.price)}`
+                  : `+ ${FormatToIDR(choice.price)}`}
+              </span>
               {(document.getElementById(choice.name) as HTMLInputElement)
                 ?.checked && (
-                <p className="text-[15px] text-zinc-800 opacity-[0.8] dark:text-bright">
-                  +{" "}
-                  {choice.price == 0
-                    ? FormatToIDR(menuClick.price * count)
-                    : FormatToIDR(choice.price * count)}
-                </p>
+                <span className="absolute right-4">
+                  <Tick />
+                </span>
               )}
-            </div>
-          ))}
-          <h3 className="dark:text-bright font-medium">
-            {FormatToIDR(resultPrice)}
-          </h3>
+            </label>
+            {choice.type === "radio" ? (
+              <input
+                type="radio"
+                id={choice.name}
+                name="options"
+                className="hidden"
+                defaultChecked={choice.checked}
+                onClick={() => handleAddTopingRadio(choice)}
+              />
+            ) : (
+              <input
+                type="checkbox"
+                id={choice.name}
+                disabled={choice.disabled}
+                defaultChecked={choice.disabled}
+                name="options"
+                className="hidden"
+                onClick={() => handleAddTopingCheckbox(choice)}
+              />
+            )}
+          </div>
+        ))}
+        <div className="flex mt-3 items-center justify-between">
+          <Counting count={count} setCount={setCount} className="self-start" />
+          <div className="">
+            <h2 className="dark:text-bright">Total Price :</h2>
+            {menuClick?.choice?.map((choice: any) => (
+              <div key={choice.name}>
+                {(document.getElementById(choice.name) as HTMLInputElement)
+                  ?.checked && (
+                  <p className="text-[15px] text-zinc-800 opacity-[0.8] dark:text-bright">
+                    +{" "}
+                    {choice.price == 0
+                      ? FormatToIDR(menuClick.price * count)
+                      : FormatToIDR(choice.price * count)}
+                  </p>
+                )}
+              </div>
+            ))}
+            <h3 className="dark:text-bright font-medium">
+              {FormatToIDR(resultPrice)}
+            </h3>
+          </div>
         </div>
-      </div>
-      <div className="max-w-36">
-        <button
-          onClick={() => handleResult()}
-          disabled={isLoading}
-          className="bg-secondary text-white rounded-xl mt-2 hover:bg-secondary/80 transition-all duration-300 py-2 px-4 w-full disabled:bg-secondary/50"
-        >
-          Tambahkan
-        </button>
+        <div className="max-w-36">
+          <button
+            onClick={() => handleResult()}
+            disabled={isLoading}
+            className="bg-secondary text-white rounded-xl mt-2 hover:bg-secondary/80 transition-all duration-300 py-2 px-4 w-full disabled:bg-secondary/50"
+          >
+            Tambahkan
+          </button>
+        </div>
       </div>
     </Modal>
   );

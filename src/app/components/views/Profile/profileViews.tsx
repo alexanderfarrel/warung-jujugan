@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import Profile from "../../icons/profile";
 import Input from "../../ui/Input";
+import useWindowWidth from "@/services/windowWidth/services";
 
 export default function ProfileView({ session, update, status }: any) {
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ export default function ProfileView({ session, update, status }: any) {
   const [totalCharUsername, setTotalCharUsername] = useState(0);
   const [totalCharEmail, setTotalCharEmail] = useState(0);
   const userImage = session?.user?.image;
+  const windowWidth = useWindowWidth();
 
   useEffect(() => {
     setTotalCharUsername(session?.user?.username?.length);
@@ -148,12 +150,12 @@ export default function ProfileView({ session, update, status }: any) {
     });
   };
   return (
-    <section className="mt-16">
-      <h1 className="text-center text-primary text-4xl font-bold mb-4">
+    <section className="mt-20">
+      <h1 className="text-center text-primary text-4xl font-bold mb-4 sm0:text-3xl">
         Profile
       </h1>
       <div className="max-w-md mx-auto">
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center sm0:flex-col">
           <div className="p-2 rounded-2xl max-w-40 flex flex-col items-center">
             {userImage ? (
               <div className="relative w-32 h-32 rounded-3xl overflow-hidden mb-2">
@@ -181,7 +183,14 @@ export default function ProfileView({ session, update, status }: any) {
               </motion.span>
             </label>
           </div>
-          <form className="grow" onSubmit={handleUserInfo}>
+          <form
+            className={`w-full ${
+              windowWidth < 530 && windowWidth > 400
+                ? "px-20"
+                : windowWidth <= 400 && "px-10"
+            }`}
+            onSubmit={handleUserInfo}
+          >
             <Input
               type="username"
               onChange={handleInputUsername}

@@ -37,7 +37,7 @@ export default function TransitionProvider({
         /> */}
         <motion.div
           className={`w-[100dvw] h-[100dvh] fixed hidden bg-secondary ${
-            windowWidth < 640 ? "rounded-t-[50px]" : "rounded-t-[100px]"
+            windowWidth < 640 ? "rounded-t-[35px]" : "rounded-t-[80px]"
           } bottom-0 z-40`}
           initial={{ height: "140dvh" }}
           animate={{
@@ -66,7 +66,7 @@ export default function TransitionProvider({
         </motion.div>
         <motion.div
           className={`w-[100dvw] h-[100dvh] fixed bg-secondary ${
-            windowWidth < 640 ? "rounded-b-[50px]" : "rounded-b-[100px]"
+            windowWidth < 640 ? "rounded-b-[35px]" : "rounded-b-[80px]"
           } top-0 z-40`}
           initial={{ height: "0dvh" }}
           animate={{

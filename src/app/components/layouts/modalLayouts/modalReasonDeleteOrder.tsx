@@ -168,7 +168,7 @@ export default function ModalReasonDeleteOrder({
         </label>
       </div>
       <textarea
-        className={`w-full opacity-0 mt-2 ${animate} rounded-xl focus:shadow-thin outline-none text-slate-600 khusus transition-shadow duration-200 hide-scrollbar dark:bg-dark2 dark:placeholder:text-neutral-400 dark:text-neutral-200`}
+        className={`w-full opacity-0 mt-2 ${animate} rounded-xl focus:shadow-thin outline-none text-slate-600 mini-scollbar transition-shadow duration-200 hide-scrollbar dark:bg-dark2 dark:placeholder:text-neutral-400 dark:text-neutral-200`}
         placeholder="Alasan"
         value={reason}
         onChange={(event) => setReason(event.target.value)}

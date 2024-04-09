@@ -20,16 +20,29 @@ export default function ModalDeleteStatusOrder({
   return (
     <Modal onClose={() => setOrderDelete("")} closed={closed}>
       <h1 className="font-semibold text-xl mb-2 dark:text-bright">Pesanan</h1>
-      <div className="max-h-72 overflow-y-auto pr-4 khusus">
+      <div className="max-h-72 overflow-y-auto pr-4 mini-scrollbar">
         {orderDelete?.order?.makanan.map((order: any, index: any) => (
           <>
-            <div key={index} className="flex">
-              <Image
-                src="/images/sawi2.png"
-                alt="sawi"
-                width={100}
-                height={100}
-              />
+            <div key={index} className="flex gap-2 mb-2">
+              <div className="w-20 h-20 flex justify-center items-center overflow-hidden">
+                {order.note != "nothing" ? (
+                  <Image
+                    src={order.topingChecked[0].display}
+                    alt="sawi"
+                    width={80}
+                    height={80}
+                    className="object-center object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={order.topingChecked[0].thumbnail}
+                    alt="sawi"
+                    width={80}
+                    height={80}
+                    className="object-center object-cover"
+                  />
+                )}
+              </div>
               <div>
                 <h3 className="font-medium dark:text-neutral-100">
                   {order.name}
@@ -52,13 +65,26 @@ export default function ModalDeleteStatusOrder({
           </>
         ))}
         {orderDelete?.order?.minuman.map((order: any, index: any) => (
-          <div key={index} className="flex">
-            <Image
-              src="/images/sawi2.png"
-              alt="sawi"
-              width={100}
-              height={100}
-            />
+          <div key={index} className="flex gap-2 mb-2">
+            <div className="w-20 h-20 flex justify-center items-center overflow-hidden">
+              {order.note != "nothing" ? (
+                <Image
+                  src={order.topingChecked[0].display}
+                  alt="sawi"
+                  width={80}
+                  height={80}
+                  className="object-center object-cover"
+                />
+              ) : (
+                <Image
+                  src={order.topingChecked[0].thumbnail}
+                  alt="sawi"
+                  width={80}
+                  height={80}
+                  className="object-center object-cover"
+                />
+              )}
+            </div>
             <div>
               <h3 className="font-medium dark:text-neutral-100">
                 {order.name}

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import DeleteIcon from "../../icons/trash";
 import FormatToIDR from "@/services/formatter/formatToIDR";
-import { useEffect } from "react";
 
 export default function FilterOrder({
   order,
@@ -35,12 +34,21 @@ export default function FilterOrder({
     <>
       <div className="flex" key={order.id}>
         <div className="">
-          <Image
-            src="/images/sawi2.png"
-            alt="empty"
-            width={100}
-            height={100}
-          ></Image>
+          {order.note != "nothing" ? (
+            <Image
+              src={order.topingChecked[0].display}
+              alt="empty"
+              width={100}
+              height={100}
+            ></Image>
+          ) : (
+            <Image
+              src={order.topingChecked[0].thumbnail}
+              alt="empty"
+              width={100}
+              height={100}
+            ></Image>
+          )}
         </div>
         <div
           className={`flex flex-col w-full items-center px-2 pb-3 pt-2 gap-2 ${
@@ -103,11 +111,13 @@ export default function FilterOrder({
             </div>
             <div className="flex gap-2 border border-neutral-200 rounded-lg p-1">
               <button
-                // disabled={
-                //   IsLoading && (LoadingInfo[order.id] != true || AllLoading)
-                // }
+                disabled={
+                  IsLoading && (LoadingInfo[order.id] != true || AllLoading)
+                }
                 className={`px-2 py-0 text-primary ${
-                  IsLoading && AllLoading && "cursor-not-allowed"
+                  IsLoading &&
+                  (LoadingInfo[order.id] != true || AllLoading) &&
+                  "cursor-not-allowed"
                 }`}
                 onClick={() => debounceHandleDecrease(order)}
               >
@@ -120,11 +130,13 @@ export default function FilterOrder({
                 {order.count}
               </p>
               <button
-                // disabled={
-                //   IsLoading && (LoadingInfo[order.id] != true || AllLoading)
-                // }
+                disabled={
+                  IsLoading && (LoadingInfo[order.id] != true || AllLoading)
+                }
                 className={`px-2 py-0 text-primary ${
-                  IsLoading && AllLoading && "cursor-not-allowed"
+                  IsLoading &&
+                  (LoadingInfo[order.id] != true || AllLoading) &&
+                  "cursor-not-allowed"
                 }`}
                 onClick={() => debounceHandleIncrease(order)}
               >
