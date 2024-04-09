@@ -66,7 +66,7 @@ const profileVariants = {
   },
 };
 
-export default function ListLink({ session }: any) {
+export default function ListLink({ session, setOpenMotion }: any) {
   const items = ["menu", "about", "contact"];
   session?.user?.role == "admin" && items.push("admin");
   const { push } = useRouter();
@@ -77,6 +77,7 @@ export default function ListLink({ session }: any) {
           <Link
             href={"/profile"}
             className="absolute hidden  top-20 sm1:flex sm0:flex flex-col items-center group hover:bg-neutral-400 hover:border-neutral-400 transition-all duration-200"
+            onClick={() => setOpenMotion(false)}
           >
             <motion.div
               variants={profileVariants}
@@ -131,6 +132,7 @@ export default function ListLink({ session }: any) {
               key={item}
               href={item == "admin" ? "/admin" : `/#${item.toLowerCase()}`}
               variants={Itemvariants}
+              onClick={() => setOpenMotion(false)}
               className="text-white capitalize text-5xl sm1:text-4xl sm0:text-4xl"
             >
               {item}

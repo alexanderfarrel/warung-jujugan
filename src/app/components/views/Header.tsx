@@ -151,7 +151,7 @@ function Header() {
                 }  bg-secondary`}
                 variants={variants}
               >
-                <ListLink session={session} />
+                <ListLink session={session} setOpenMotion={setOpenMotion} />
               </motion.div>
               <HamburgerButton
                 setOpenMotion={setOpenMotion}
