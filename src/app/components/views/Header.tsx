@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Profile from "../icons/profile";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CartIcon from "../icons/cart";
 import Notification from "../icons/notification";
 import useWindowWidth from "@/services/windowWidth/services";
@@ -17,6 +17,31 @@ function Header() {
   const { data: session, status }: any = useSession();
   const [openMotion, setOpenMotion] = useState(false);
   let windowWidth = useWindowWidth();
+
+  const isClient = typeof window === "object";
+
+  useEffect(() => {
+    const handleScroll = (event: any) => {
+      if (openMotion) {
+        event.preventDefault();
+        window.scrollTo(0, 0);
+      }
+    };
+
+    if (isClient) {
+      if (openMotion) {
+        window.addEventListener("scroll", handleScroll, { passive: false });
+      } else {
+        window.removeEventListener("scroll", handleScroll);
+      }
+    }
+
+    return () => {
+      if (isClient) {
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [openMotion, isClient]);
 
   if (status === "loading") {
     return (
@@ -143,7 +168,7 @@ function Header() {
                 onClick={() => setOpenMotion(false)}
               ></div>
               <motion.div
-                className={`fixed top-0 right-0 bottom-0 ${
+                className={`fixed top-0 right-0 bottom-0 h-full ${
                   windowWidth < 400 ? `w-full` : "w-[400px]"
                 }  bg-secondary`}
                 variants={variants}
