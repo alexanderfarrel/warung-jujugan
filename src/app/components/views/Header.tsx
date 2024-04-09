@@ -44,8 +44,8 @@ function Header() {
     open: {
       clipPath:
         windowWidth < 800
-          ? `circle(${window.innerHeight + 150}px at 368px 28px)`
-          : `circle(${window.innerHeight + 150}px at 348px 28px)`,
+          ? `circle(${window.innerHeight + 150}px at 368px 27px)`
+          : `circle(${window.innerHeight + 150}px at 348px 27px)`,
       transition: {
         type: "spring",
         stiffness: 25,
@@ -55,9 +55,9 @@ function Header() {
       clipPath:
         windowWidth < 800
           ? windowWidth < 400
-            ? `circle(18px at ${windowWidth - 32}px 28px)`
-            : "circle(18px at 368px 28px)"
-          : "circle(18px at 348px 28px)",
+            ? `circle(18px at ${windowWidth - 32}px 27px)`
+            : "circle(18px at 368px 27px)"
+          : "circle(18px at 348px 27px)",
       transition: {
         delay: 0.8,
         type: "spring",
