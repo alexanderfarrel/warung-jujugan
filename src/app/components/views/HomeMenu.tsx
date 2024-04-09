@@ -26,32 +26,6 @@ export default function HomeMenu() {
     return grouped;
   }, {});
 
-  const Makanan = () => {
-    return (
-      <>
-        <FilterOrderHeading infoType={"Makanan"}></FilterOrderHeading>
-        <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
-          {groupedOrders["makanan"].map((menu: any) => (
-            <MenuItem menu={menu} key={menu.name} />
-          ))}
-        </div>
-      </>
-    );
-  };
-
-  const Minuman = () => {
-    return (
-      <>
-        <FilterOrderHeading infoType={"Minuman"}></FilterOrderHeading>
-        <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
-          {groupedOrders["minuman"].map((menu: any) => (
-            <MenuItem menu={menu} key={menu.name} />
-          ))}
-        </div>
-      </>
-    );
-  };
-
   return (
     <motion.div
       initial={{ y: -1000 }}
@@ -102,11 +76,45 @@ export default function HomeMenu() {
             <>
               {saring == "Semua" ? (
                 <>
-                  <Makanan />
-                  <Minuman />
+                  <FilterOrderHeading infoType={"Makanan"}></FilterOrderHeading>
+                  <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
+                    {groupedOrders["makanan"].map((menu: any) => (
+                      <MenuItem menu={menu} key={menu.name} />
+                    ))}
+                  </div>
+                  <FilterOrderHeading infoType={"Minuman"}></FilterOrderHeading>
+                  <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
+                    {groupedOrders["minuman"].map((menu: any) => (
+                      <MenuItem menu={menu} key={menu.name} />
+                    ))}
+                  </div>
                 </>
               ) : (
-                <>{saring == "Makanan" ? <Makanan /> : <Minuman />}</>
+                <>
+                  {saring == "Makanan" ? (
+                    <>
+                      <FilterOrderHeading
+                        infoType={"Makanan"}
+                      ></FilterOrderHeading>
+                      <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
+                        {groupedOrders["makanan"].map((menu: any) => (
+                          <MenuItem menu={menu} key={menu.name} />
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <FilterOrderHeading
+                        infoType={"Minuman"}
+                      ></FilterOrderHeading>
+                      <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
+                        {groupedOrders["minuman"].map((menu: any) => (
+                          <MenuItem menu={menu} key={menu.name} />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </>
               )}
             </>
           ) : (
