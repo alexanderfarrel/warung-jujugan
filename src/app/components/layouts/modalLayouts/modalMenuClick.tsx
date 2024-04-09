@@ -9,7 +9,7 @@ import FormatToIDR from "@/services/formatter/formatToIDR";
 import { notifOrder, orderCount } from "@/app/redux/store";
 import { useDispatch } from "react-redux";
 import Tick from "../../icons/tick";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function ModalMenuClick(props: any) {
   const { setMenuClick, menuClick } = props;
