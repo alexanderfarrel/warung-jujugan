@@ -9,6 +9,7 @@ import FormatToIDR from "@/services/formatter/formatToIDR";
 import { notifOrder, orderCount } from "@/app/redux/store";
 import { useDispatch } from "react-redux";
 import Tick from "../../icons/tick";
+import { useRouter } from "next/router";
 
 export default function ModalMenuClick(props: any) {
   const { setMenuClick, menuClick } = props;
@@ -23,6 +24,7 @@ export default function ModalMenuClick(props: any) {
   const [closed, setClosed] = useState<boolean>(false);
   const [urlDisplay, setUrlDisplay] = useState<string>("");
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     findUrl(menuClick.choice[0].name);
@@ -89,6 +91,7 @@ export default function ModalMenuClick(props: any) {
 
   const handleResult = async () => {
     if (session == null) {
+      router.push("/auth/login");
       return toast.error("Silahkan login terlebih dahulu");
     }
     setIsLoading(true);
