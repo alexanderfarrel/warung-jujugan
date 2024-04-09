@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Profile from "../icons/profile";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CartIcon from "../icons/cart";
 import Notification from "../icons/notification";
 import useWindowWidth from "@/services/windowWidth/services";
@@ -18,30 +18,11 @@ function Header() {
   const [openMotion, setOpenMotion] = useState(false);
   let windowWidth = useWindowWidth();
 
-  const isClient = typeof window === "object";
-
-  useEffect(() => {
-    const handleScroll = (event: any) => {
-      if (openMotion) {
-        event.preventDefault();
-        window.scrollTo(0, 0);
-      }
-    };
-
-    if (isClient) {
-      if (openMotion) {
-        window.addEventListener("scroll", handleScroll, { passive: false });
-      } else {
-        window.removeEventListener("scroll", handleScroll);
-      }
-    }
-
-    return () => {
-      if (isClient) {
-        window.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, [openMotion, isClient]);
+  openMotion
+    ? windowWidth > 640
+      ? ""
+      : (document.body.style.overflow = "hidden")
+    : setTimeout(() => (document.body.style.overflow = "auto"), 500);
 
   if (status === "loading") {
     return (
