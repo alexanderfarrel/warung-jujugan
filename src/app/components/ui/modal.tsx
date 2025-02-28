@@ -10,9 +10,10 @@ export default function Modal({
   closed?: any;
 }) {
   const [close, setClose] = useState(false);
+  const timeoutRef = useRef<any>(null);
   const ref: any = useRef();
   const handleClose = useCallback(() => {
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       onClose();
     }, 300);
     setClose(true);
@@ -28,6 +29,11 @@ export default function Modal({
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [closed, handleClose, onClose]);
   return (
     <div

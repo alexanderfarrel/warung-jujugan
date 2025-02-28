@@ -9,7 +9,6 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  onSnapshot,
 } from "firebase/firestore";
 import app from "./init";
 import {
@@ -134,7 +133,7 @@ export async function uploadImage(fileName: string, image: any) {
 }
 
 export async function deleteImage(fileName: string) {
-  let storageRef = ref(storage, "images/" + fileName);
+  let storageRef = ref(storage, `images/${fileName}`);
   await deleteObject(storageRef);
   return {
     status: true,

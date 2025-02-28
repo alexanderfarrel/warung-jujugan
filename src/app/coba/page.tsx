@@ -16,25 +16,6 @@ export default function OrdersAdmin() {
   const windowWidth = useWindowWidth();
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const getUserData = useCallback(
-  //   async (data: any) => {
-  //     const res = await fetch("/api/admin/orders/user", {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${session?.accessToken}`,
-  //         "Cache-Control": "no-cache",
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-  //     const result = await res.json();
-  //     if (result.status) {
-  //       setData(formatOrders(result.data));
-  //     }
-  //   },
-  //   [session?.accessToken]
-  // );
-
   useEffect(() => {
     const getData = async () => {
       const res = await fetch("/api/admin/orders", { next: { revalidate: 2 } });
