@@ -18,9 +18,9 @@ export default function UserAdminView() {
   return (
     <>
       <div className="max-w-4xl rounded-xl overflow-hidden">
-        <table className="w-full">
+        <table className="w-full dark:text-bright">
           <thead className="sm1:hidden sm0:hidden">
-            <tr className="bg-neutral-200 h-14">
+            <tr className="bg-neutral-200 h-14 dark:bg-dark2">
               <th>Username</th>
               <th>Email</th>
               <th>Role</th>
@@ -31,7 +31,7 @@ export default function UserAdminView() {
             {users?.map((user: any) => (
               <tr
                 key={user.id}
-                className="text-center h-14 even:bg-neutral-200
+                className="text-center h-14 even:bg-neutral-200 dark:even:bg-dark2
                   
                   sm0:even:bg-white sm0:h-full sm1:h-full sm0:block sm0:mb-4 sm0:border sm0:border-gray sm0:p-4 sm0:rounded-xl
                   
