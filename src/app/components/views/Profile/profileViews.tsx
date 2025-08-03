@@ -12,7 +12,6 @@ export default function ProfileView({ session, update, status }: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [avatarLoading, setAvatarLoading] = useState(false);
   const [error, setError] = useState("");
-  const [count, setCount] = useState(4);
   const [totalCharUsername, setTotalCharUsername] = useState(0);
   const [totalCharEmail, setTotalCharEmail] = useState(0);
   const userImage = session?.user?.image;
@@ -88,7 +87,7 @@ export default function ProfileView({ session, update, status }: any) {
       setAvatarLoading(false);
       return toast.error("kayanya ada yang error");
     }
-    if (image.size > 1000000) {
+    if (image.size > 1_000_000) {
       setAvatarLoading(false);
       return toast.error("Maximal image 1 MB aja..", {
         icon: "😣",

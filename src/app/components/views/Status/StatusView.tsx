@@ -1,7 +1,7 @@
 "use client";
 
 import useWindowWidth from "@/services/windowWidth/services";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ModalOrderStatus from "../../layouts/modalLayouts/modalOrderStatus";
 import { motion } from "framer-motion";
 import Spinner from "../../ui/Spinner";
@@ -14,10 +14,10 @@ import formatOrders from "@/services/formatter/formatOrders";
 import FormatToIDR from "@/services/formatter/formatToIDR";
 import ModalDeleteStatusOrder from "../../layouts/modalLayouts/modalDeleteStatusOrder";
 import ModalReasonDeleteOrder from "../../layouts/modalLayouts/modalReasonDeleteOrder";
-import { notifStatus } from "@/app/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { notifStatus } from "@/app/redux/notificationSlice";
 
 export default function StatusView({ session }: any) {
   const windowWidth = useWindowWidth();
@@ -71,7 +71,7 @@ export default function StatusView({ session }: any) {
       <section className="mt-[4.5rem]">
         <div
           className={`flex justify-between items-center mb-3 ${
-            windowWidth <= 450 && "flex-col gap-1"
+            windowWidth <= 450 ? "flex-col gap-1" : ""
           }`}
         >
           <h1 className="text-xl font-bold dark:text-bright">Status Pesanan</h1>
@@ -110,12 +110,13 @@ export default function StatusView({ session }: any) {
               </aside>
             </div>
           ) : (
-            <>
+            <React.Fragment>
               {sortedResult
                 .filter((item: any) => item.proses != "Selesai")
-                .map((order: any, index: any) => (
-                  <>
+                .map((order: any, index: number) => (
+                  <React.Fragment key={order.id}>
                     <motion.div
+                      key={order.id}
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.98 }}
                       className="shadow-thin rounded-xl px-4 py-2 mb-5 dark:bg-dark2"
@@ -233,7 +234,7 @@ export default function StatusView({ session }: any) {
                                 order.status != "Dibatalkan" && (
                                   <button
                                     className="px-2 rounded-md text-red-500 text-[13px] font-medium"
-                                    data-notAllowed="true"
+                                    data-notallowed="true"
                                     onClick={() => setOrderDelete(order)}
                                   >
                                     Batalkan Pesanan
@@ -246,7 +247,7 @@ export default function StatusView({ session }: any) {
                                     icon: "😭",
                                   })
                                 }
-                                data-notAllowed="true"
+                                data-notallowed="true"
                               >
                                 Hubungi Penjual
                               </button>
@@ -360,7 +361,7 @@ export default function StatusView({ session }: any) {
                               order.status !== "Diproses" && (
                                 <button
                                   className="px-2 py-1 text-red-500 text-sm font-medium"
-                                  data-notAllowed="true"
+                                  data-notallowed="true"
                                   onClick={() => setOrderDelete(order)}
                                 >
                                   Batalkan Pesanan
@@ -369,7 +370,7 @@ export default function StatusView({ session }: any) {
 
                             <button
                               className="px-2 py-1 bg-green-200 rounded-lg text-green-600 text-sm flex-shrink-0 self-end font-medium"
-                              data-notAllowed="true"
+                              data-notallowed="true"
                               onClick={() =>
                                 toast.error("Fitur belum Tersedia", {
                                   icon: "😭",
@@ -382,9 +383,9 @@ export default function StatusView({ session }: any) {
                         </>
                       )}
                     </motion.div>
-                  </>
+                  </React.Fragment>
                 ))}
-            </>
+            </React.Fragment>
           )
         ) : (
           <div className="shadow-thin rounded-xl px-4 py-2 text-center dark:text-bright dark:bg-dark2">

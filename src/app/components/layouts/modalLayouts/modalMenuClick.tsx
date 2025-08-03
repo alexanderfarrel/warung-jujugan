@@ -6,14 +6,16 @@ import { toast } from "react-hot-toast";
 import Counting from "../../ui/Counting";
 import generateRandomId from "@/services/RandomID/RandomID";
 import FormatToIDR from "@/services/formatter/formatToIDR";
-import { notifOrder, orderCount } from "@/app/redux/store";
 import { useDispatch } from "react-redux";
-import Tick from "../../icons/tick";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { notifOrder } from "@/app/redux/notificationSlice";
+import { api } from "@/services/axios/axios";
 
 export default function ModalMenuClick(props: any) {
   const { setMenuClick, menuClick } = props;
   const { data: session }: any = useSession();
+  const [dataOrder, setDataOrder] = useState<any>(menuClick);
   const [count, setCount] = useState(1);
   const [resultPrice, setResultPrice] = useState(0);
   const [priceToping, setPriceToping] = useState(0);
@@ -23,15 +25,50 @@ export default function ModalMenuClick(props: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [closed, setClosed] = useState<boolean>(false);
   const [urlDisplay, setUrlDisplay] = useState<string>("");
+  const [maxCount, setMaxCount] = useState(3);
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const getUserOrder = async () => {
+    const res = await api.get(`/api/users/getorders?id=${session?.user?.id}`, {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
+    if (res.status === 200) {
+      const copiedData = JSON.parse(JSON.stringify(menuClick));
+      copiedData.choice.forEach((choice: any) => {
+        res.data.data.orders.forEach((order: any) => {
+          if (order.note === "choiceOne") {
+            if (choice.name === order.name) {
+              choice.stock -= order.count;
+            }
+          } else {
+            order.topingChecked.forEach((item: any) => {
+              if (choice.name === item.name) {
+                choice.stock -= order.count;
+              }
+            });
+          }
+        });
+      });
+      setTopingChecked([copiedData.choice[0]]);
+      setDataOrder(copiedData);
+    }
+  };
+
   useEffect(() => {
     findUrl(menuClick.choice[0].name);
+    setTopingChecked([menuClick.choice[0]]);
+    getUserOrder();
   }, []);
 
   useEffect(() => {
     const jalanin = () => {
+      const minStock = Math.min(
+        ...topingChecked.map((item: any) => item.stock)
+      );
+      setMaxCount(minStock);
       if (menuClick.choice[0].type === "checkbox") {
         setHargaUtama(menuClick.price);
       }
@@ -57,6 +94,7 @@ export default function ModalMenuClick(props: any) {
     perbarui,
     hargaUtama,
     menuClick.choice,
+    topingChecked,
   ]);
 
   const handleAddTopingRadio = (choice: any) => {
@@ -77,9 +115,9 @@ export default function ModalMenuClick(props: any) {
       setHargaUtama(menuClick.price);
       setTopingChecked((prev) => [...prev, choice]);
       if (priceToping == 0) {
-        setPriceToping(choice.price);
+        setPriceToping(Number(choice.price));
       } else {
-        setPriceToping(priceToping + choice.price);
+        setPriceToping(priceToping + Number(choice.price));
       }
     } else {
       setTopingChecked(
@@ -94,6 +132,7 @@ export default function ModalMenuClick(props: any) {
       router.push("/auth/login");
       return toast.error("Silahkan login terlebih dahulu");
     }
+    if (count > maxCount) return toast.error("Stok tidak mencukupi");
     setIsLoading(true);
     let selectedTopping =
       topingChecked.length > 0 ? topingChecked : [menuClick.choice[0]];
@@ -107,13 +146,15 @@ export default function ModalMenuClick(props: any) {
     const dataResult = {
       id,
       type: menuClick.type,
-      name: name,
-      count: count,
+      name,
+      count,
+      realName: menuClick.name,
       price: menuClick.price,
       totalPrice: resultPrice,
       topingChecked: selectedTopping,
       note: menuClick.note,
     };
+
     const savingPromise = new Promise(async (resolve, reject) => {
       try {
         setClosed(true);
@@ -164,13 +205,17 @@ export default function ModalMenuClick(props: any) {
   };
 
   return (
-    <Modal onClose={() => setMenuClick("")} closed={closed}>
-      <div className="max-w-[18rem]">
+    <Modal
+      className="w-full max-w-[18rem]"
+      onClose={() => setMenuClick("")}
+      closed={closed}
+    >
+      <div className={`max-h-[650px] overflow-y-auto hide-scrollbar`}>
         <h1 className="font-bold text-3xl dark:text-bright sm0:text-2xl mb-3">
-          {menuClick.name}
+          {dataOrder.name}
         </h1>
         <div className="flex justify-center items-center w-full h-36 overflow-hidden mb-2">
-          {menuClick.thumbnail ? (
+          {dataOrder.thumbnail ? (
             <Image
               src={urlDisplay}
               alt={menuClick.name}
@@ -189,43 +234,66 @@ export default function ModalMenuClick(props: any) {
           )}
         </div>
         <div className="flex mb-5 h-12 overflow-y-scroll mini-scrollbar dark:bg-dark2 px-1 rounded-lg">
-          <h4 className="dark:text-neutral-300">{menuClick.subtitle}</h4>
+          <h4 className="dark:text-neutral-300">{menuClick.desc}</h4>
         </div>
-        {menuClick?.choice?.map((choice: any) => (
-          <div key={choice.name}>
+        {dataOrder?.choice?.map((choice: any, i: number) => (
+          <div key={choice.name} className="mb-2 relative">
             <label
               htmlFor={choice.name}
-              className={`border-2 border-primary ${
+              className={`border-2 border-secondary ${
                 (document.getElementById(choice.name) as HTMLInputElement)
                   ?.checked
-                  ? "bg-primary text-bright"
+                  ? "bg-secondary text-bright"
                   : "text-neutral-700"
-              } w-full flex items-center mb-2 rounded-xl px-2 py-1 relative cursor-pointer font-medium dark:text-bright capitalize transition-all duration-300`}
+              } w-full rounded-xl px-2 ${
+                (document.getElementById(choice.name) as HTMLInputElement)
+                  ?.checked
+                  ? "pb-[14px]"
+                  : "pb-[0px]"
+              } relative cursor-pointer font-medium dark:text-bright capitalize transition-all duration-500 flex flex-col`}
             >
-              {choice.name}{" "}
-              <span
-                className={`ml-3 dark:text-neutral-200 ${
-                  (document.getElementById(choice.name) as HTMLInputElement)
-                    ?.checked
-                    ? "text-neutral-100"
-                    : "text-neutral-500"
-                } text-[14px]`}
-              >
-                {choice.price == 0
-                  ? choice.priceDisplay
-                    ? `${FormatToIDR(choice.priceDisplay)}`
-                    : ""
-                  : choice.type === "radio"
-                  ? `${FormatToIDR(choice.price)}`
-                  : `+ ${FormatToIDR(choice.price)}`}
-              </span>
-              {(document.getElementById(choice.name) as HTMLInputElement)
-                ?.checked && (
-                <span className="absolute right-4">
-                  <Tick />
+              <div className="self-start">
+                {choice.name}{" "}
+                <span
+                  className={`ml-3 dark:text-neutral-200 ${
+                    (document.getElementById(choice.name) as HTMLInputElement)
+                      ?.checked
+                      ? "text-neutral-100"
+                      : "text-neutral-500"
+                  } text-[14px]`}
+                >
+                  {choice.price == 0
+                    ? choice.priceDisplay
+                      ? `${FormatToIDR(choice.priceDisplay)}`
+                      : ""
+                    : choice.type === "radio"
+                    ? `${FormatToIDR(choice.price)}`
+                    : `+ ${FormatToIDR(choice.price)}`}
                 </span>
-              )}
+              </div>
             </label>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: (
+                  document.getElementById(choice.name) as HTMLInputElement
+                )?.checked
+                  ? 1
+                  : 0,
+              }}
+              transition={{
+                duration: 0.2,
+                delay: (
+                  document.getElementById(choice.name) as HTMLInputElement
+                )?.checked
+                  ? 0.4
+                  : 0,
+              }}
+              className={`text-sm sm0:text-[11px] dark:text-bright absolute bottom-0 left-3`}
+            >
+              Stock : {choice.stock}
+            </motion.span>
+
             {choice.type === "radio" ? (
               <input
                 type="radio"
@@ -239,8 +307,8 @@ export default function ModalMenuClick(props: any) {
               <input
                 type="checkbox"
                 id={choice.name}
-                disabled={choice.disabled}
-                defaultChecked={choice.disabled}
+                disabled={choice.checked}
+                defaultChecked={choice.checked}
                 name="options"
                 className="hidden"
                 onClick={() => handleAddTopingCheckbox(choice)}
@@ -249,25 +317,55 @@ export default function ModalMenuClick(props: any) {
           </div>
         ))}
         <div className="flex mt-3 items-center justify-between">
-          <Counting count={count} setCount={setCount} className="self-start" />
-          <div className="">
+          <div className="flex gap-2 flex-col self-start">
+            <Counting
+              maxCount={maxCount}
+              count={count}
+              setCount={setCount}
+              className="self-start"
+            />
+            {count > maxCount && (
+              <p className="text-red-500 text-sm -mt-1">Stock Habis!</p>
+            )}
+          </div>
+          <div className="relative">
             <h2 className="dark:text-bright">Total Price :</h2>
-            {menuClick?.choice?.map((choice: any) => (
-              <div key={choice.name}>
+            {topingChecked?.map((choice: any, i: number) => (
+              <div key={i} className={`${i === 0 ? "" : "absolute"}`}>
                 {(document.getElementById(choice.name) as HTMLInputElement)
                   ?.checked && (
-                  <p className="text-[15px] text-zinc-800 opacity-[0.8] dark:text-bright">
+                  <motion.p
+                    initial={{
+                      opacity: 0,
+                      marginTop: (i > 1 ? (i - 1) * 22 : 0) - 10,
+                    }}
+                    animate={{
+                      opacity: (document.getElementById(
+                        choice.name
+                      ) as HTMLInputElement)
+                        ? 1
+                        : 0,
+                      marginTop: i > 1 ? (i - 1) * 22 : 0,
+                    }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                    className="text-[15px] text-zinc-800 opacity-[0.8] dark:text-bright"
+                  >
                     +{" "}
                     {choice.price == 0
                       ? FormatToIDR(menuClick.price * count)
                       : FormatToIDR(choice.price * count)}
-                  </p>
+                  </motion.p>
                 )}
               </div>
             ))}
-            <h3 className="dark:text-bright font-medium">
+            <motion.h3
+              initial={{ marginTop: 0 }}
+              animate={{ marginTop: (topingChecked.length - 1) * 22 }}
+              transition={{ duration: 0.5 }}
+              className="dark:text-bright font-medium"
+            >
               {FormatToIDR(resultPrice)}
-            </h3>
+            </motion.h3>
           </div>
         </div>
         <div className="max-w-36">

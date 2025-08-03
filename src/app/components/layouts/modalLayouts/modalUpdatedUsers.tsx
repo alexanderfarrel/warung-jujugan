@@ -54,7 +54,7 @@ export default function ModalUpdatedUsers(props: any) {
 
   return (
     <Modal onClose={() => setUpdatedUser("")} closed={closed}>
-      <h1 className="text-xl mb-2">Update User</h1>
+      <h1 className="text-xl mb-2 dark:text-bright">Update User</h1>
       <form onSubmit={handleUpdateUser} className="w-72 p-2">
         <Input
           type="text"
@@ -80,7 +80,7 @@ export default function ModalUpdatedUsers(props: any) {
           name="role"
           id="role"
           defaultValue={updatedUser.role}
-          className="w-full py-2 mb-4 mt-3 rounded-lg px-2 cursor-pointer outline-none"
+          className="w-full py-2 mb-4 mt-3 rounded-lg px-2 cursor-pointer outline-none dark:bg-dark2 dark:text-bright"
         >
           <option key={"admin"} value="admin" id="admin">
             Admin

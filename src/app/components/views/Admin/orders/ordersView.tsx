@@ -7,7 +7,7 @@ import FormatTime from "@/services/formatter/formatTime";
 import FormatToIDR from "@/services/formatter/formatToIDR";
 import useWindowWidth from "@/services/windowWidth/services";
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function OrdersAdminView(props: any) {
@@ -143,7 +143,7 @@ export default function OrdersAdminView(props: any) {
             }
           })
           .map((order: any) => (
-            <>
+            <React.Fragment key={order.time}>
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
@@ -194,7 +194,7 @@ export default function OrdersAdminView(props: any) {
                           <>
                             <FilterOrderHeading infoType="Makanan" small />
                             {order.order.makanan.map((makanan: any) => (
-                              <>
+                              <React.Fragment key={makanan.name}>
                                 <section
                                   className={`flex justify-between items-center ${
                                     windowWidth <= 400 ? "pr-0" : "pr-5"
@@ -210,7 +210,7 @@ export default function OrdersAdminView(props: any) {
                                     <p>{FormatToIDR(makanan.totalPrice)}</p>
                                   </aside>
                                 </section>
-                              </>
+                              </React.Fragment>
                             ))}
                           </>
                         )}
@@ -218,7 +218,7 @@ export default function OrdersAdminView(props: any) {
                           <>
                             <FilterOrderHeading infoType="Minuman" small />
                             {order.order.minuman.map((minuman: any) => (
-                              <>
+                              <React.Fragment key={minuman.name}>
                                 <section
                                   className={`flex justify-between items-center ${
                                     windowWidth <= 400 ? "pr-0" : "pr-5"
@@ -234,7 +234,7 @@ export default function OrdersAdminView(props: any) {
                                     <p>{FormatToIDR(minuman.totalPrice)}</p>
                                   </aside>
                                 </section>
-                              </>
+                              </React.Fragment>
                             ))}
                           </>
                         )}
@@ -311,7 +311,7 @@ export default function OrdersAdminView(props: any) {
                             ? "bg-orange-200 text-orange-600"
                             : "bg-green-300 text-green-700"
                         } text-[13px]`}
-                        data-notAllowed="true"
+                        data-notallowed="true"
                         disabled={isLoading}
                         onClick={(e) => handleClickAgree(e, order)}
                       >
@@ -323,7 +323,7 @@ export default function OrdersAdminView(props: any) {
                       </button>
                       <button
                         className=" font-medium text-red-500 text-sm"
-                        data-notAllowed="true"
+                        data-notallowed="true"
                         disabled={isLoading}
                         onClick={(e: any) => handleBatal(e, order)}
                       >
@@ -371,7 +371,7 @@ export default function OrdersAdminView(props: any) {
                           <>
                             <FilterOrderHeading infoType="Makanan" />
                             {order.order.makanan.map((makanan: any) => (
-                              <>
+                              <React.Fragment key={makanan.id}>
                                 <section className="flex justify-between pr-5">
                                   <main className="flex gap-3">
                                     <div>
@@ -391,7 +391,7 @@ export default function OrdersAdminView(props: any) {
                                     </p>
                                   </aside>
                                 </section>
-                              </>
+                              </React.Fragment>
                             ))}
                           </>
                         )}
@@ -399,7 +399,7 @@ export default function OrdersAdminView(props: any) {
                           <>
                             <FilterOrderHeading infoType="Minuman" />
                             {order.order.minuman.map((minuman: any) => (
-                              <>
+                              <React.Fragment key={minuman.id}>
                                 <section className="flex justify-between pr-5">
                                   <main className="flex gap-3">
                                     <div>
@@ -419,7 +419,7 @@ export default function OrdersAdminView(props: any) {
                                     </p>
                                   </aside>
                                 </section>
-                              </>
+                              </React.Fragment>
                             ))}
                           </>
                         )}
@@ -486,7 +486,7 @@ export default function OrdersAdminView(props: any) {
                               ? "bg-orange-200 text-orange-600"
                               : "bg-green-300 text-green-700"
                           } text-sm`}
-                          data-notAllowed="true"
+                          data-notallowed="true"
                           disabled={isLoading}
                           onClick={(e) => handleClickAgree(e, order)}
                         >
@@ -498,7 +498,7 @@ export default function OrdersAdminView(props: any) {
                         </button>
                         <button
                           className=" font-medium text-red-500 text-sm"
-                          data-notAllowed="true"
+                          data-notallowed="true"
                           disabled={isLoading}
                           onClick={(e: any) => handleBatal(e, order)}
                         >
@@ -511,7 +511,7 @@ export default function OrdersAdminView(props: any) {
                   </>
                 )}
               </motion.div>
-            </>
+            </React.Fragment>
           ))
       ) : (
         <div className="text-center text-primary font-medium text-xl">

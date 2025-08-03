@@ -180,7 +180,7 @@ export default function OrdersAdmin() {
                             ? "bg-orange-200 text-orange-600"
                             : "bg-green-300 text-green-700"
                         } text-[13px]`}
-                        data-notAllowed="true"
+                        data-notallowed="true"
                       >
                         {order.status == "Diproses"
                           ? "Selesaikan Pesanan"
@@ -190,7 +190,7 @@ export default function OrdersAdmin() {
                       </button>
                       <button
                         className="px-2 border-2 border-red-200 rounded-lg text-red-500 text-[13px]"
-                        data-notAllowed="true"
+                        data-notallowed="true"
                       >
                         Tolak Pesanan
                       </button>
@@ -317,7 +317,7 @@ export default function OrdersAdmin() {
                               ? "bg-orange-200 text-orange-600"
                               : "bg-green-300 text-green-700"
                           } text-sm`}
-                          data-notAllowed="true"
+                          data-notallowed="true"
                         >
                           {order.status == "Diproses"
                             ? "Selesaikan Pesanan"
@@ -327,7 +327,7 @@ export default function OrdersAdmin() {
                         </button>
                         <button
                           className="px-2 py-1 border-2 border-red-200 rounded-lg text-red-500 text-sm"
-                          data-notAllowed="true"
+                          data-notallowed="true"
                         >
                           Tolak Pesanan
                         </button>

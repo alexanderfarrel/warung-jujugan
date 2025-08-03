@@ -1,6 +1,6 @@
 import {
+  deleteById,
   deleteImage,
-  deleteUser,
   retrieveData,
   retrieveDataById,
   updateData,
@@ -58,7 +58,7 @@ export async function DELETE(req: NextRequest) {
     if (user?.imageName?.length > 0) {
       await deleteImage(user.imageName);
     }
-    const res = await deleteUser("users", id);
+    const res = await deleteById("users", id);
     return NextResponse.json(res);
   } catch (err) {
     return NextResponse.json(

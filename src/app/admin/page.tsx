@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import HistoryViewAdmin from "../components/views/Admin/history/HistoryViewAdmin";
 import formatOrders from "@/services/formatter/formatOrders";
 import { motion } from "framer-motion";
+import MenuAdminView from "../components/views/Admin/menu/MenuViewAdmin";
 
 export default function AdminPage() {
   const { data: session }: any = useSession();
@@ -60,6 +61,7 @@ export default function AdminPage() {
               { Orders: ["Semua", "Menunggu", "Diproses", "Dibatalkan"] },
               "History",
               "Users",
+              "Menu",
             ]}
             setDataSaring={setDataSaring}
             setSaring={setSaring}
@@ -77,6 +79,7 @@ export default function AdminPage() {
             <HistoryViewAdmin session={session} getData={getData} />
           )}
           {saring == "Users" && <UserAdminView />}
+          {saring == "Menu" && <MenuAdminView session={session} />}
         </div>
       </motion.div>
     </>

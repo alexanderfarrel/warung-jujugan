@@ -12,7 +12,6 @@ export default function FilterOrder({
   handleDelete,
   debounceHandleDecrease,
   debounceHandleIncrease,
-  countTemporary,
   infoType,
 }: {
   order: any;
@@ -24,7 +23,6 @@ export default function FilterOrder({
   handleDelete: any;
   debounceHandleDecrease: any;
   debounceHandleIncrease: any;
-  countTemporary: any;
   infoType: string;
 }) {
   const IsLoading = isLoading.isLoading;

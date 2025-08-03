@@ -1,58 +1,38 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import rootReducer from "./rootReducer";
 
-// Define slice for notifications
-const notificationSlice = createSlice({
-  name: "notifications",
-  initialState: {
-    announcement: true,
-    notificationOrder: false,
-    notificationStatus: false,
-    orderCount: 0,
-    statusCount: 0,
-    historyCount: 0,
-  },
-  reducers: {
-    notifAnnouncement(state) {
-      state.announcement = false;
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["notifications"],
+  transforms: [
+    {
+      in: (inboundState: any) => {
+        // Jangan simpan nilai announcement saat persist
+        const { announcement, ...rest } = inboundState;
+        return rest;
+      },
+      out: (outboundState: any) => {
+        return {
+          announcement: true, // reset ke true saat aplikasi dimuat ulang
+          ...outboundState,
+        };
+      },
+      config: { whitelist: ["notifications"] },
     },
-    notifOrder(state) {
-      state.notificationOrder = true;
-    },
-    notifStatus(state) {
-      state.notificationStatus = true;
-    },
-    orderCount(state, action) {
-      state.orderCount = action.payload;
-    },
-    statusCount(state, action) {
-      state.statusCount = action.payload;
-    },
-    historyCount(state, action) {
-      state.historyCount = action.payload;
-    },
-    clearNotification(state) {
-      state.notificationOrder = false;
-      state.notificationStatus = false;
-    },
-  },
+  ],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // penting agar redux-persist tidak error
+    }),
 });
 
-// Extract action creators from slice
-export const {
-  notifOrder,
-  notifStatus,
-  orderCount,
-  statusCount,
-  clearNotification,
-  historyCount,
-  notifAnnouncement,
-} = notificationSlice.actions;
-
-// Combine reducers using configureStore
-const store = configureStore({
-  reducer: {
-    notifications: notificationSlice.reducer,
-  },
-});
-
-export default store;
+export const persistor = persistStore(store);

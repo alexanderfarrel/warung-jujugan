@@ -13,7 +13,7 @@ export default function ModalDeletedUser({
   const [closed, setClosed] = useState<boolean>(false);
   const handleDelete = async (id: any) => {
     const savingPromise = new Promise(async (resolve, reject) => {
-      const res = await fetch("/api/users", {
+      const res = await fetch("/api/admin/users", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export default function ModalDeletedUser({
         body: JSON.stringify({ id }),
       });
       if (res.status === 200) {
-        const result = await fetch("/api/users");
+        const result = await fetch("/api/admin/users");
         const data = await result.json();
         setUsers(data);
         setClosed(true);
@@ -39,7 +39,7 @@ export default function ModalDeletedUser({
   };
   return (
     <Modal onClose={() => setDeletedUser("")} closed={closed}>
-      <h1>
+      <h1 className="dark:text-bright">
         Apakah Kamu Yakin Ingin Menghapus User{" "}
         <span className="font-bold">{deletedUser?.username}</span> ?
       </h1>

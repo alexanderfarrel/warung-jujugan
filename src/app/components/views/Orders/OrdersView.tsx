@@ -8,8 +8,8 @@ import Button from "../../ui/Button";
 import Spinner from "../../ui/Spinner";
 import FormatToIDR from "@/services/formatter/formatToIDR";
 import dynamic from "next/dynamic";
-import { notifOrder } from "@/app/redux/store";
 import { useDispatch, useSelector } from "react-redux";
+import { notifOrder } from "@/app/redux/notificationSlice";
 
 function OrdersView(props: any) {
   const { session, orders, setOrders, countTemporary, setCountTemporary } =
@@ -64,8 +64,10 @@ function OrdersView(props: any) {
     let hargaNothing = nothing.reduce((total: any, item: any) => {
       let toppingPrices = item.topingChecked.map((toping: any) => toping.price);
       let itemTotalPrice =
-        toppingPrices.reduce((acc: number, price: number) => acc + price, 0) +
-        item.price;
+        toppingPrices.reduce(
+          (acc: number, price: number) => Number(acc) + Number(price),
+          0
+        ) + Number(item.price);
       return total + itemTotalPrice * item.count;
     }, 0);
 
@@ -168,6 +170,19 @@ function OrdersView(props: any) {
   }, [updateProduct, handleResult]);
 
   const debounceHandleIncrease = (product: any) => {
+    let minStock = 0;
+    orders.forEach((order: any) => {
+      if (order.id === product.id) {
+        minStock = Math.min(
+          ...order.topingChecked.map((item: any) => item.stock)
+        );
+      }
+    });
+
+    if (product.count + 1 > minStock) {
+      return toast.error(`stok ${product.name} tidak mencukupi`);
+    }
+
     setLoading(() => {
       return [
         { isLoading: true },
@@ -340,7 +355,6 @@ function OrdersView(props: any) {
                               handleDelete={handleDelete}
                               debounceHandleIncrease={debounceHandleIncrease}
                               debounceHandleDecrease={debounceHandleDecrease}
-                              countTemporary={countTemporary}
                               infoType="makanan"
                             />
                           </>
@@ -365,7 +379,6 @@ function OrdersView(props: any) {
                               handleDelete={handleDelete}
                               debounceHandleIncrease={debounceHandleIncrease}
                               debounceHandleDecrease={debounceHandleDecrease}
-                              countTemporary={countTemporary}
                               infoType="minuman"
                             />
                           </>

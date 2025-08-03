@@ -77,7 +77,7 @@ export async function updateData(collectionName: string, id: any, data: any) {
   }
 }
 
-export async function deleteUser(collectionName: string, id: any) {
+export async function deleteById(collectionName: string, id: any) {
   try {
     await deleteDoc(doc(firestore, collectionName, id));
     return {
@@ -93,7 +93,7 @@ export async function deleteUser(collectionName: string, id: any) {
 export async function uploadImage(fileName: string, image: any) {
   return new Promise(async (resolve, reject) => {
     try {
-      let storageRef = ref(storage, "images/" + fileName);
+      const storageRef = ref(storage, `images/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(

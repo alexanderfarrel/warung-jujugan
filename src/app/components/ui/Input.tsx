@@ -79,6 +79,7 @@ export default function Input(props: typesProp) {
           onFocus={handleFocus}
           onBlur={handleBlur}
           required={required}
+          autoComplete="off"
           className={`${className} outline-none w-full p-2 rounded-t-lg border-b-2 ${borderColor} ${
             disabled
               ? "cursor-not-allowed bg-neutral-200 text-zinc-400"

@@ -2,12 +2,14 @@ import { AnimatePresence } from "framer-motion";
 import Header from "../Header";
 import { motion } from "framer-motion";
 import useWindowWidth from "@/services/windowWidth/services";
+import { useEffect, useState } from "react";
 
 export default function TransitionProvider({
   children,
   pathname,
   disableNavbar,
 }: any) {
+  const [isClient, setIsClient] = useState(false);
   const path = pathname.split("/")[1];
   const title =
     path == ""
@@ -22,6 +24,12 @@ export default function TransitionProvider({
       ? pathname.split("/")[2]
       : path;
   const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
   return (
     <AnimatePresence key={`${pathname} - ${path}`} mode="wait">
       <div key={`${pathname} - ${title}`} className="w-full overflow-hidden">
@@ -34,12 +42,16 @@ export default function TransitionProvider({
           animate={{
             display: "block",
             height: "0dvh",
-            transition: { delay: 0.8, duration: 0.5, display: { delay: 0.8 } },
+            transition: {
+              delay: 0.8,
+              duration: 0.5,
+              display: { delay: 0.8 },
+            },
           }}
           exit={{ height: "0dvh" }}
         />
         <motion.div
-          className="fixed m-auto left-0 top-0 bottom-0 right-0 text-white text-8xl z-50 cursor-default w-fit h-fit capitalize sm1:text-5xl sm0:text-5xl"
+          className="fixed m-auto left-0 top-0 bottom-0 right-0 text-white text-6xl z-50 cursor-default w-fit h-fit capitalize sm1:text-5xl sm0:text-5xl"
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,

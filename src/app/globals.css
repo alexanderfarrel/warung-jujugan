@@ -16,10 +16,10 @@ body,
   display: none;
 }
 .mini-scrollbar::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
   background-color: transparent;
@@ -39,13 +39,13 @@ body,
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* Variabel tema diatur oleh Tailwind (atau class) */
+:root {
+  --autofill-bg: oklch(92.9% 0.013 255.508);
+  --autofill-text: black;
+}
 
-/* input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active,
-input:-internal-autofill-selected,
-input:-internal-autofill-previewed {
-  background-color: black !important;
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
-} */
+.dark {
+  --autofill-bg: #313944; /* warna background dark mode */
+  --autofill-text: #fff;
+}

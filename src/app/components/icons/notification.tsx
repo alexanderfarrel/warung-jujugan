@@ -2,7 +2,7 @@ import {
   clearNotification,
   historyCount,
   statusCount,
-} from "@/app/redux/store";
+} from "@/app/redux/notificationSlice";
 import { usePathname } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

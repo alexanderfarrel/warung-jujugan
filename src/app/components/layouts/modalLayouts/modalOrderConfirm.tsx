@@ -4,8 +4,10 @@ import Button from "../../ui/Button";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import FormatToIDR from "@/services/formatter/formatToIDR";
-import { notifOrder, notifStatus } from "@/app/redux/store";
 import { useDispatch } from "react-redux";
+import { notifOrder, notifStatus } from "@/app/redux/notificationSlice";
+import { error } from "console";
+import { api } from "@/services/axios/axios";
 
 export default function ModalOrderConfirm(props: any) {
   const { menuConfirm, setMenuConfirm, sum, sumBarang, session } = props;
@@ -28,6 +30,25 @@ export default function ModalOrderConfirm(props: any) {
     }
   };
 
+  const handleCheckStock = async (menu: any[]) => {
+    const res = await api?.get("/api/menu");
+    const data = res.data;
+    data.forEach((toping: any) => {
+      toping.choice.forEach((choice: any) => {
+        menu.forEach((item: any) => {
+          item.topingChecked.forEach((topingChecked: any) => {
+            if (topingChecked.name === choice.name) {
+              if (choice.stock < item.count) {
+                toast.error(`Stok ${item.name} tidak mencukupi`);
+                throw new Error("Stock Tidak Mencukupi");
+              }
+            }
+          });
+        });
+      });
+    });
+  };
+
   const handleConfirm = (menu: any) => {
     if (menu.length < 1) {
       return toast.error("Tidak ada menu yang dipilih");
@@ -36,6 +57,7 @@ export default function ModalOrderConfirm(props: any) {
     const savingPromise = new Promise(async (resolve, reject) => {
       setIsLoading(true);
       try {
+        await handleCheckStock(menu);
         const result: any = await fetch("/api/profile/orderConfirm", {
           method: "POST",
           headers: {
@@ -50,10 +72,6 @@ export default function ModalOrderConfirm(props: any) {
         });
         const res = await result.json();
         if (res.status) {
-          dispatch(notifOrder());
-          dispatch(notifStatus());
-          setIsLoading(false);
-          setClosed(true);
           resolve(res);
         } else {
           setIsLoading(false);
@@ -63,12 +81,17 @@ export default function ModalOrderConfirm(props: any) {
       } catch (err) {
         reject();
         console.log(err);
+      } finally {
+        dispatch(notifOrder());
+        dispatch(notifStatus());
+        setIsLoading(false);
+        setClosed(true);
       }
     });
     toast.promise(savingPromise, {
       loading: "Loading",
       success: "Success",
-      error: "Failed",
+      error: "Ups terjadi kesalahan",
     });
   };
   return (
@@ -145,7 +168,7 @@ export default function ModalOrderConfirm(props: any) {
         value={note}
       ></textarea>
       <div className="flex justify-between px-2 mt-2 items-center gap-2">
-        <h2 className="text-neutral-500 text-[15px] dark:text-neutral-300">{`Total Harga (${sumBarang} Pesanan)`}</h2>
+        <h2 className="text-neutral-500 text-[15px] dark:text-neutral-300">{`Total Harga (${sumBarang} Pcs)`}</h2>
         <p className="font-semibold dark:text-bright">{FormatToIDR(sum)}</p>
       </div>
       <Button

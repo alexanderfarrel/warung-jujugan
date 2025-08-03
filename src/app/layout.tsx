@@ -5,12 +5,12 @@ import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import useWindowWidth from "@/services/windowWidth/services";
-import { Provider } from "react-redux";
-import store from "./redux/store";
 import { useEffect, useState } from "react";
 import TransitionProvider from "./components/views/TransitionProvider/TransitionProvider";
 import Head from "next/head";
 import HeadLayout from "./components/layouts/HeadLayout/HeadLayout";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 const disableNavbar = ["auth"];
@@ -21,15 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const pathname = usePathname();
+
+  let windowWidth = useWindowWidth();
 
   useEffect(() => {
     const isDarkModeSaved = localStorage.getItem("isDarkMode");
     setIsDarkMode(isDarkModeSaved ? JSON.parse(isDarkModeSaved) : true);
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
-  const pathname = usePathname();
 
-  let windowWidth = useWindowWidth();
   return (
     <html lang="en" className={isDarkMode ? "dark" : ""}>
       <Head>

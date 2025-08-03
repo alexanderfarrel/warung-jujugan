@@ -91,7 +91,7 @@ export default function HomeMenu() {
                 </>
               ) : (
                 <>
-                  {saring == "Makanan" ? (
+                  {saring == "Makanan" && groupedOrders?.minuman?.length > 0 ? (
                     <>
                       <FilterOrderHeading
                         infoType={"Makanan"}
@@ -103,16 +103,18 @@ export default function HomeMenu() {
                       </div>
                     </>
                   ) : (
-                    <>
-                      <FilterOrderHeading
-                        infoType={"Minuman"}
-                      ></FilterOrderHeading>
-                      <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
-                        {groupedOrders["minuman"].map((menu: any) => (
-                          <MenuItem menu={menu} key={menu.name} />
-                        ))}
-                      </div>
-                    </>
+                    groupedOrders?.minuman?.length > 0 && (
+                      <>
+                        <FilterOrderHeading
+                          infoType={"Minuman"}
+                        ></FilterOrderHeading>
+                        <div className="grid grid-cols-3 gap-6 sm1:grid-cols-2 sm0:grid-cols-2">
+                          {groupedOrders["minuman"].map((menu: any) => (
+                            <MenuItem menu={menu} key={menu.name} />
+                          ))}
+                        </div>
+                      </>
+                    )
                   )}
                 </>
               )}

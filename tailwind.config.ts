@@ -30,11 +30,10 @@ const config: Config = {
         visibleDownList: {
           "0%": {
             "max-height": "0",
-            padding: "4px 8px 4px 0px",
+            padding: "4px 8px 4px 8px",
           },
           "50%": {
             "box-shadow": "0 1.5px 4px 0px rgba(100, 100, 100, .1)",
-            "padding-left": "2px",
           },
           "100%": {
             "max-height": "120px",
@@ -45,16 +44,12 @@ const config: Config = {
         unVisibleList: {
           "0%": {
             "max-height": "120px",
+            "box-shadow": "0 1.5px 4px 0px rgba(100, 100, 100, .6)",
             padding: "4px 8px 4px 8px",
-            "box-shadow": "0 1.5px 4px 0px rgba(100, 100, 100, .1)",
-          },
-          "90%": {
-            "padding-left": "4px",
           },
           "100%": {
             "max-height": "0",
-            ppadding: "0px",
-            "box-shadow": "0 1.5px 4px 0px rgba(100, 100, 100, .6)",
+            padding: "4px 8px 4px 8px",
           },
         },
         visibleDownReason: {
@@ -88,6 +83,7 @@ const config: Config = {
       animation: {
         "bounce-fast": "bounce .8s ease-in-out infinite alternate",
         fadeIn: "fadeIn .3s ease-in-out forwards",
+        fadeInIntro: "fadeIn .5s ease-in-out forwards 1s",
         fadeOut: "fadeOut .3s ease-in-out forwards",
         popUp: "popUp .5s ease-out forwards",
         visibleDownList: "visibleDownList .3s ease-out forwards",

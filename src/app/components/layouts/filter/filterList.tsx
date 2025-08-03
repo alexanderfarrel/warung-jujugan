@@ -161,12 +161,13 @@ export default function FilterList({
                           style={{
                             left: `-${(index + 1) * 40}px`,
                           }}
-                          onClick={() => handleClick(itemName, "object")}
+                          onClick={() => handleClick(itemName, "string")}
                         >
                           {dataSaring != "Semua"
                             ? dataSaring.split(" ")[0]
                             : itemName}{" "}
                           <TriangleBottom
+                            onClick={() => handleClick(itemName, "object")}
                             className={`w-4 h-4 ${arrowAnimate} transition-all duration-300 dark:text-bright`}
                           />
                         </motion.li>

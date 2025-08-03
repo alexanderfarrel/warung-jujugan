@@ -2,13 +2,17 @@
 import { useState } from "react";
 import Modal from "../../ui/modal";
 import { useDispatch } from "react-redux";
-import { notifAnnouncement } from "@/app/redux/store";
+import { notifAnnouncement } from "@/app/redux/notificationSlice";
 
 export default function ModalAnnouncement() {
   const [closed, setClosed] = useState<boolean>(false);
   const dispatch = useDispatch();
   return (
-    <Modal onClose={() => dispatch(notifAnnouncement())} closed={closed}>
+    <Modal
+      onClose={() => dispatch(notifAnnouncement())}
+      closed={closed}
+      intro={true}
+    >
       <div className="text-white max-w-xs">
         <h1 className="text-3xl font-bold">
           Selamat Datang Di Warung Jujugan 😁

@@ -121,7 +121,7 @@ export default function MenuItem(props: any) {
             className="h-10 sm0:h-8 overflow-hidden"
           >
             <p className="text-gray cutoff-text text-sm sm0:text-[12px] h-10 sm0:leading-4 dark:text-neutral-400">
-              {menu.subtitle}
+              {menu.desc}
             </p>
           </motion.div>
         )}

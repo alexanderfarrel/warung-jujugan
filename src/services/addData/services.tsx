@@ -82,7 +82,7 @@ export async function addOrder(email: string, data: any, update = false) {
         return result;
       }
     } else {
-      userData.orders = [data]; //userData.orders.push(data) :
+      userData.orders = [data];
       const result = await updateData("users", userData.id, userData);
       return result;
     }
@@ -120,8 +120,21 @@ export default async function addOrderConfirm(
   const result: any = await addData("orders", menu);
   if (result.status) {
     await updateData("users", id, { orders: [] });
+    await updateMenuStock(menu.order[0]);
     return { status: true };
   } else {
     return { status: false };
   }
+}
+
+async function updateMenuStock(data: any) {
+  const menu: any = await retrieveDataByField("menu", "name", data.realName);
+  menu[0].choice.map((choice: any) => {
+    data.topingChecked.map((toping: any) => {
+      if (choice.name === toping.name) {
+        choice.stock -= data.count;
+      }
+    });
+  });
+  await updateData("menu", menu[0].id, menu[0]);
 }

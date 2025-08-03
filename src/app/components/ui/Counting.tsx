@@ -1,6 +1,12 @@
+import toast from "react-hot-toast";
+
 export default function Counting(props: any) {
-  const { className, count, setCount } = props;
+  const { className, count, setCount, maxCount } = props;
   const handleCountUp = () => {
+    if (count >= maxCount) {
+      toast.error("Stock Tidak Mencukupi");
+      return;
+    }
     setCount(count + 1);
   };
 

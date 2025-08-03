@@ -60,12 +60,12 @@ export default function UserAdminView() {
                 <td className="flex justify-center items-center h-14 gap-2">
                   <button
                     onClick={() => setEditUser(user)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-lg sm1:px-2 sm1:py-1 sm0:px-2 sm0:py-1"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-[7px] px-[9px] rounded-lg sm1:px-2 sm1:py-1 sm0:px-2 sm0:py-1"
                   >
                     <EditIcon className="sm1:w-5 sm0:w-5" />
                   </button>
                   <button
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded-lg sm1:px-2 sm1:py-1 sm0:px-2 sm0:py-1"
+                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-[7px] px-[9px] rounded-lg sm1:px-2 sm1:py-1 sm0:px-2 sm0:py-1"
                     onClick={() => setDeletedUser(user)}
                   >
                     <DeleteIcon className="sm1:w-5" />

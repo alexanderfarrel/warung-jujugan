@@ -1,6 +1,15 @@
-export default function TriangleBottom({ className = "w-5 h-5" }) {
+interface TriangleBottomProps {
+  className?: string;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
+}
+
+export default function TriangleBottom({
+  className,
+  onClick,
+}: TriangleBottomProps) {
   return (
     <svg
+      onClick={onClick}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

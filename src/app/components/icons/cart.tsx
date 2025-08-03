@@ -1,4 +1,4 @@
-import { clearNotification, orderCount } from "@/app/redux/store";
+import { clearNotification, orderCount } from "@/app/redux/notificationSlice";
 import { usePathname } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

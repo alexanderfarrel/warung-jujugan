@@ -255,7 +255,7 @@ export default function HistoryView(props: any) {
                             )}
                             <button
                               className="px-2 text-green-500 font-bold text-[12px] self-end"
-                              data-notAllowed="true"
+                              data-notallowed="true"
                               onClick={() =>
                                 toast.error("Fitur belum Tersedia", {
                                   icon: "😭",
@@ -393,7 +393,7 @@ export default function HistoryView(props: any) {
                             )}
                             <button
                               className="px-2 py-1 bg-green-300 rounded-lg text-green-700 text-sm flex-shrink-0 self-end"
-                              data-notAllowed="true"
+                              data-notallowed="true"
                               onClick={() =>
                                 toast.error("Fitur belum Tersedia", {
                                   icon: "😭",
